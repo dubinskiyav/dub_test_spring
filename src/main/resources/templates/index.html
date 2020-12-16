@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main page</title>
-</head>
-<body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
-    <p>Единицы измерения<a href="/edizm">here</a></p>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="shortcut icon" href="images/gelicon_icon.png" type="image/x-icon">
+  <title>Тесты spring boot</title>
+  <script>
+	function edizmClick() {
+		var url = '/edizm';
+		document.location.href = url;
+	};
+  </script>
+ </head>
+ <body>
+	<div>
+		<p><b>Драйвер: </b><input type="text" size="40" value="postgresql">
+		<p><b>Хост: </b><input type="text" size="40" value="10.15.3.39">
+		<p><b>Порт: </b><input type="text" size="40" value="5432">
+		<p><b>База данных: </b><input type="text" size="40" value="PS_DEVELOP_TRUNK">
+		<p><b>Пользователь: </b><input type="text" size="40" value="SYSDBA">
+		<p><b>Пароль: </b><input type="text" size="40" value="masterkey">
+	</div>
+	<div>
+		<button onclick="edizmClick()">Единицы измерения</button>
+	</div>
+ </body>
 </html>

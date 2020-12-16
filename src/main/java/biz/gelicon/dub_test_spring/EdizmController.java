@@ -31,6 +31,7 @@ public class EdizmController {
                                                  <p th:text="'Имя хоста: ' + ${host}" />
                                                  Атрибут th у тега p - это инструмент движка шаблонов Thymeleaf
                                               */
+        model.addAttribute("driver", driverName);
         model.addAttribute("host", hostName);
         model.addAttribute("port", portName);
         model.addAttribute("db", dbName);
