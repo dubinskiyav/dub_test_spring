@@ -8,18 +8,37 @@
   <script>
 	function edizmClick() {
 		var url = '/edizm';
+		var delimiter = '?';
+		var driverClassName = document.getElementById("driverClassName").value;
+		if (driverClassName) {
+			url = url + delimiter + 'driverclassname=' + driverClassName;
+			delimiter = '&';
+		}
+		var jdbcUrl = document.getElementById("jdbcUrl").value;
+		if (jdbcUrl) {
+			url = url + delimiter + 'jdbcurl=' + jdbcUrl;
+			delimiter = '&';
+		}
+		var userName = document.getElementById("userName").value;
+		if (userName) {
+			url = url + delimiter + 'user=' + userName;
+			delimiter = '&';
+		}
+		var passWord = document.getElementById("passWord").value;
+		if (passWord) {
+			url = url + delimiter + 'password=' + passWord;
+			delimiter = '&';
+		}
 		document.location.href = url;
 	};
   </script>
  </head>
  <body>
 	<div>
-		<p><b>Драйвер: </b><input type="text" size="40" value="postgresql">
-		<p><b>Хост: </b><input type="text" size="40" value="10.15.3.39">
-		<p><b>Порт: </b><input type="text" size="40" value="5432">
-		<p><b>База данных: </b><input type="text" size="40" value="PS_DEVELOP_TRUNK">
-		<p><b>Пользователь: </b><input type="text" size="40" value="SYSDBA">
-		<p><b>Пароль: </b><input type="text" size="40" value="masterkey">
+		<p><b>driverClassName: </b><input type="text" size="40" value="org.postgresql.Driver" id="driverClassName">
+		<p><b>jdbcUrl: </b><input type="text" size="60" value="jdbc:postgresql://10.15.3.39:5432/PS_DEVELOP_TRUNK" id="jdbcUrl">
+		<p><b>userName: </b><input type="text" size="20" value="SYSDBA" id="userName">
+		<p><b>passWord: </b><input type="text" size="20" value="masterkey" id="passWord">
 	</div>
 	<div>
 		<button onclick="edizmClick()">Единицы измерения</button>
