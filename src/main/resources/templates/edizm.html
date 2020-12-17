@@ -14,6 +14,7 @@
 		border: solid 1px red; /* Параметры рамки */
 		background: #e3e8cc; /* Цвет фона */
 		overflow: hidden; /* Отменяем действие float */
+		display: none;
 	}
 	.header_left_block { /* Левая часть заголовка */
 		1height: 20px;
@@ -41,6 +42,7 @@
 		background: DarkBlue;
 		color: white;
 		1min-height: 20px;
+		display: none;
 	}
 	.main_menu { /* Главное меню */
 		background: LightGray; 
@@ -255,9 +257,11 @@
 		document.getElementById("button_analiz").addEventListener("click", buttonAnalizClick);
 		document.getElementById("menu_analiz").addEventListener("click", buttonAnalizClick);
 	});
+	function printButton() {
+		window.location.reload();
+	});
 	function refreshMain() {
-		footer_message_boxText('Обновление...');
-		
+		footer_message_boxText('Обновление...');	
 		var body = document.body;
         var tbl  = document.createElement('table');
 		tbl.style.width  = '100%';
@@ -317,7 +321,6 @@
   </script>
  </head>
  <body>
-	<a href="chernovik.php">Вызов функции</a>
 	<div class="header">
 		<div class="header_left_block">	
 			<div class="header_item_left">Геликон</div>
@@ -391,13 +394,13 @@
 		</div>
 	</div>
 	<div class="PanelButton">
-		<button class="button_action" id="button_add"><img src="images/button_add.png" alt="Добавить" onclick="menu_addClick()" ></button>
-		<button class="button_action" id="button_edit"><img src="images/button_edit.png" alt="Изменить" onmouseout="elem_blur(this)"></button>
-		<button class="button_action"><img src="images/button_delete.png" alt="Удалить"></button>
-		<button class="button_action"><img src="images/button_refresh.png" alt="Обновить" onclick="refreshMain()"></button>
-		<button class="button_action" id="button_filter"><img src="images/button_filter.png" alt="Фильтр"></button>
-		<button class="button_action"><img src="images/button_print.png" alt="Печать"></button>
-		<button class="button_action"><img src="images/button_view.png" alt="Просмотр"></button>
+		<button class="button_action" id="button_add"><img src="images/button_add.png" title="Добавить" onclick="menu_addClick()" ></button>
+		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить" onmouseout="elem_blur(this)"></button>
+		<button class="button_action"><img src="images/button_delete.png" title="Удалить"></button>
+		<button class="button_action"><img src="images/button_refresh.png" title="Обновить" onclick="refreshMain()"></button>
+		<button class="button_action" id="button_filter"><img src="images/button_filter.png" title="Фильтр"></button>
+		<button class="button_action"><img src="images/button_print.png" title="Печать" onclick="printButton()"></button>
+		<button class="button_action"><img src="images/button_view.png" title="Просмотр"></button>
 	</div>
 	<div class="content_panel">
 		<div class="main_table_panel" id="main_table_panel">

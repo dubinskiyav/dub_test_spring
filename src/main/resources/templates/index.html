@@ -4,29 +4,14 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="images/gelicon_icon.png" type="image/x-icon">
-  <title>Тесты spring boot</title>
+  <title></title>
   <script>
-	function edizmClick() {
-		var url = '/edizm';
+	function capitalClick() {
+		var url = '/capital';
 		var delimiter = '?';
-		var driverClassName = document.getElementById("driverClassName").value;
-		if (driverClassName) {
-			url = url + delimiter + 'driverclassname=' + driverClassName;
-			delimiter = '&';
-		}
-		var jdbcUrl = document.getElementById("jdbcUrl").value;
-		if (jdbcUrl) {
-			url = url + delimiter + 'jdbcurl=' + jdbcUrl;
-			delimiter = '&';
-		}
-		var userName = document.getElementById("userName").value;
-		if (userName) {
-			url = url + delimiter + 'user=' + userName;
-			delimiter = '&';
-		}
-		var passWord = document.getElementById("passWord").value;
-		if (passWord) {
-			url = url + delimiter + 'password=' + passWord;
+		var alias = document.getElementById("alias").value;
+		if (alias) {
+			url = url + delimiter + 'alias=' + alias;
 			delimiter = '&';
 		}
 		document.location.href = url;
@@ -35,13 +20,10 @@
  </head>
  <body>
 	<div>
-		<p><b>driverClassName: </b><input type="text" size="40" value="org.postgresql.Driver" id="driverClassName">
-		<p><b>jdbcUrl: </b><input type="text" size="60" value="jdbc:postgresql://10.15.3.39:5432/PS_DEVELOP_TRUNK" id="jdbcUrl">
-		<p><b>userName: </b><input type="text" size="20" value="SYSDBA" id="userName">
-		<p><b>passWord: </b><input type="text" size="20" value="masterkey" id="passWord">
+		<p><b>База: </b><input type="text" size="40" value="PS_DEVELOP_TRUNK" id="alias">
 	</div>
 	<div>
-		<button onclick="edizmClick()">Единицы измерения</button>
+		<button class="button_capital" id="button_capital1" title="Система Капитал" onclick="capitalClick()"><img th:src="@{images/capital.png}">Капитал CSE</button>
 	</div>
  </body>
 </html>
