@@ -1,7 +1,6 @@
 package biz.gelicon.dub_test_spring;
 
 import java.sql.Connection;
-import java.util.Collection;
 
 // Класс для работы с базой данных
 public class DatebaseConn {
@@ -13,7 +12,8 @@ public class DatebaseConn {
     String user;
     String passWord;
 
-    public static Connection connection;
+    public static Connection connection; // Текущий коннект
+    public static DatebaseConn datebaseConn; // Текущая база данных
 
     DatebaseConn() {
     }
@@ -31,7 +31,6 @@ public class DatebaseConn {
         this.user = user;
         this.passWord = passWord;
     }
-    public String getAlias () {return alias;}
 
 }
 

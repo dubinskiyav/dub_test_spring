@@ -19,6 +19,7 @@ public class CapitalController {
     List<DatebaseConn> datebaseConnList = new ArrayList<>();
     Connection connection;
 
+
     private static final Logger logger = LoggerFactory.getLogger(CapitalController.class);
 
     @RequestMapping(value = "/capital")
@@ -61,6 +62,7 @@ public class CapitalController {
         }
         // Присвоим глобальную переменную
         DatebaseConn.connection = connection;
+        DatebaseConn.datebaseConn = datebaseConn;
         logger.error("Database connected");
 
         return "capital";

@@ -5,47 +5,15 @@
 	<link rel="shortcut icon" href="images/gelicon_icon.png" type="image/x-icon">
 	<title>Единицы измерения</title>
   <style type="text/css">
+	body { /* Именно так, без точки */
+		margin: 0; /* Убираем отступы */
+	}
 	.body {
 		font-size: 20px; /* Размер шрифта */
-	}
-	.header { /* Верхняя часть с заголовком */
-		1height: 25px;
-		padding: 5px; /* Поля */
-		border: solid 1px red; /* Параметры рамки */
-		background: #e3e8cc; /* Цвет фона */
-		overflow: hidden; /* Отменяем действие float */
-		display: none;
-	}
-	.header_left_block { /* Левая часть заголовка */
-		1height: 20px;
-		background: #e3e8cc; /* Цвет фона */
-		padding: 5px; /* Поля */
-		border: solid 1px black; /* Параметры рамки */
-		background: #e3e8cc; /* Цвет фона */
-		float: left; /* Состыковка с другим слоем по горизонтали */
-	}
-	.header_item_left {
-		float: left; /* Состыковка с другим слоем по горизонтали */
-	}
-	.header_right_block { /* Левая часть заголовка */
-		1height: 20px;
-		background: #e3e8cc; /* Цвет фона */
-		padding: 5px; /* Поля */
-		border: solid 2px blue; /* Параметры рамки */
-		background: #e3e8cc; /* Цвет фона */
-		float: right;
-	}
-	.header_item_right {
-		float: right; /* Состыковка с другим слоем по горизонтали */
-	}
-	.global_menu { /* Глобальное меню */
-		background: DarkBlue;
-		color: white;
-		1min-height: 20px;
-		display: none;
+		border: solid 2px red;
 	}
 	.main_menu { /* Главное меню */
-		background: LightGray; 
+		background: #f1f1f1; 
 		min-height: 20px;
 	}
 	.dropdown { /* Элемент главного меню (заголовок-кнопка и выпадающий список) */ 
@@ -53,7 +21,7 @@
 		display: inline-block;
 	}
 	.dropbtn { /* Кнопка-команда в строчке главного меню */
-		background-color: LightCyan;
+		background-color: #f1f1f1;
 		padding: 4px;
 		border: none;
 	}
@@ -73,17 +41,7 @@
 	}
 	.dropdown_content a:hover {background-color: #ddd;} /* Подсвечиваем пункт */
 	.dropdown:hover .dropdown_content {display: block;}
-	.dropdown:hover .dropbtn {1background-color: Cyan;}
-
-	.dropdown1 { 
-		1position: relative;
-		1display: inline-block;
-	}
-
-	.dropbtn1 { 
-		position: relative;
-		1float: right;
-	}
+	.dropdown:hover .dropbtn {background-color: #ddd;}
 
 	.dropdown_content1 { /* Выпадающий прямоугольник элемента главного меню */
 		display: none;
@@ -98,28 +56,7 @@
 	}
 	.dropdown1:hover .dropdown_content1 {display: block;}
 
-	.global_menu ul {
-		list-style: none; /*убираем маркеры списка*/
-		margin: 0; /*убираем верхнее и нижнее поле, равное 1em*/
-		padding-left: 0; /*убираем левый отступ, равный 40px*/
-	}
-	.global_menu a {
-		text-decoration: none; /*убираем подчеркивание текста ссылок*/
-		color: white;
-	}
-	.global_menu li {
-		display: inline-block;
-		1float: left;
-	}
-	.global_menu li:after {
-		content: "|";
-		color: red;
-		display: inline-block;
-		vertical-align:top;
-	}
-	.global_menu li:last-child:after {content: none;}
-	.global_menu a:hover {color: red;}
-	#footer {
+	#footer { /* Полоска снизу окна */
 		position: fixed; /* Фиксированное положение */
 		left: 5; bottom: 0; /* Левый нижний угол */
 		background: Gainsboro; /* Цвет фона */
@@ -128,14 +65,15 @@
 		height: 20px;
 		overflow: hidden; /* Отменяем действие float */
 	}
-	#footer_message_box {
+	#footer_message_box { / Надпись слева /
 		float: left; /* Состыковка с другим слоем по горизонтали */
 		background: yellow; /* Цвет фона */
 		width: 400px;
 	}
-	#db_message_box {
+	#db_message_box { /* Надпись справа */
 		float: left; /* Состыковка с другим слоем по горизонтали */
 		background: Gainsboro;
+		color: red;
 		min-width: 400px;
 		position: absolute;
 		right: 0;
@@ -143,212 +81,88 @@
 	}
 	.PanelButton { /* Панель кнопок-действий */
 		height: 50px;
-		background: LightSkyBlue; 
-		border: solid 1px red;
+		background: #f1f1f1; 
+		border: solid LightGrey;
+		border-width: 1px 0px;
 	}
 	.button_action { /* Кнопка-действие */
 		height: 100%;
-		background: LightCyan;
 		width: 50px;
-		border: solid 1px black;;
+		border: solid 0px;
 		vertical-align: middle;
 		padding: 0;
 		margin: 0;
 		float:left;
 	}
-	.button_action:hover { background: PowderBlue; } /* при наведении курсора мышки */
-	.button_action:active { background: DeepSkyBlue; } /* при нажатии */
-	.content_panel {
-		min-height: 300px;
+	.button_action:hover { background: #ddd; } /* при наведении курсора мышки */
+	.button_action:active { background: Silver; } /* при нажатии */
+	.content_panel { /* Основаня панель */
+		1min-height: 300px;
 		background: Lime; 
 	}
 	.main_table_panel { /* Панель основной таблицы */
-		min-height: 100px;
-		background: Linen; 
-		border: solid 1px red;
+		1min-height: 100px;
+		background: #f1f1f1; 
+		border: solid 0px red;
 	}
 	.master_table { /* Мастер таблица */
 		text-align: left;
 		width: 100%;
-		border: 1;
-		background: Ivory;
+		border: 0;
+		1background: Ivory;
 		border-collapse: collapse; /* Убираем двойные границы между ячейками */
 	}
 	.master_table th{ /* Ячейки - заголовки */
-		background: FloralWhite;
-		border: 2px solid red;
+		border: 0px solid red;
 	}
 	.master_table td{ /* Ячейки */
-		background: FloralWhite;
-		border: 1px solid red;
+		border: 0px solid red;
 	}
 	.master_table td:nth-child(even){ /* Четные столбцы */
-		background-color: Cornsilk;
+		1background-color: Cornsilk;
 	}
 	.master_table td:nth-child(5),th:nth-child(5){ /* Пятый столбец заголовок и данные */
 		text-align: center;
 	}
 	.master_table tr td:nth-child(odd){ /* Нечетные столбцы */
-		background-color: Bisque;
+		1background-color: Bisque;
 	}
 	.master_table caption { 
 		caption-side: top; /* Заголовок над таблицей */
 		text-align: left;
-		font-size: 24px;
+		color: red;
+		text-transform: uppercase;
+		font-weight: bold;
+		border: solid LightGrey;
+		border-width: 0px 0px 1px 0px;
     }
  </style>
-  <script
-  </script>
-  <script
-	type="text/javascript"
-	src="https://code.jquery.com/jquery-3.5.1.min.js"
-	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-	crossorigin="anonymous">
-  </script>
-  <script type="text/javascript">
-	$(document).ready(function(){
-		$("#button_filter").click(function(){
-			$("#master_table").slideToggle("slow");
-			$(this).toggleClass("active");
-			footer_message_boxText('Фильтр');
-		});
-		db_message_boxText();
-	});
-  </script>
   <script>
     // Считаем переменные из спринга
-	var driverclassname = "[[${driverclassname}]]";
-	var jdbcurl = "[[${jdbcurl}]]";
-	var user = "[[${user}]]";
-	var password = "[[${password}]]";
+	var alias = "[[${alias}]]";
+	// Текст внизу слева
 	function footer_message_boxText(msg) {
 		document.getElementById('footer_message_box').textContent = msg;
 	};
-	function db_message_boxText() {
-		document.getElementById('db_message_box').textContent = jdbcurl + ':' + user;
+	// Текст внизу справа, как правило база данных
+	function db_message_boxText(msg) {
+		document.getElementById('db_message_box').textContent = msg;
 	};
+	// После загрузки окна
 	window.onload = function(){
-		db_message_boxText();
+		db_message_boxText(alias); // установить алиас снизу справа
+		var current_datetime = new Date();
+		footer_message_boxText('Обновлено ' + current_datetime);
 	};
   </script>
   <script>
-	function buttonMainClick() {
-		alert('driverclassname=' + driverclassname);
-	};
-	function buttonCatalogClick() {
-		alert('Справочники!');
-	};	
-	function button_moduleClick() {
-		alert('Модули!');
-	};	
-	function buttonSettingClick() {
-		alert('Настройки!');
-	};	
-	function buttonAnalizClick(event) {
-		alert('Анализ события: ' + event.type + " на " + event.currentTarget 
-		+ " Координаты: " + event.clientX + ":" + event.clientY);
-	};	
-	document.addEventListener("DOMContentLoaded", function() {
-		buttonCatalog.addEventListener("click", buttonCatalogClick);
-		document.getElementById("button-setting").addEventListener("click", buttonSettingClick);
-	});
-	window.addEventListener('load',function(){
-		document.getElementById("button_module").addEventListener("click", button_moduleClick);
-		document.getElementById("button_analiz").addEventListener("click", buttonAnalizClick);
-		document.getElementById("menu_analiz").addEventListener("click", buttonAnalizClick);
-	});
-	function printButton() {
-		window.location.reload();
-	});
 	function refreshMain() {
-		footer_message_boxText('Обновление...');	
-		var body = document.body;
-        var tbl  = document.createElement('table');
-		tbl.style.width  = '100%';
-		tbl.style.border = '1px solid black';
-		tbl.setAttribute("class","master_table");
-		tbl.setAttribute("id","master_table");
-		var caption = tbl.createCaption();
-		caption.innerHTML = "Единицы измерения";
-		var tr = tbl.insertRow(); // Создаем строку-заголовок
-		tr.insertCell().outerHTML = "<th>Код</th>";
-		tr.insertCell().outerHTML = "<th>Обозначение</th>";
-		tr.insertCell().outerHTML = "<th>Наименование</th>";
-
-		// Массив единиц измерения
-		var edizmArray = [
-			['ГК', 'ГК', 'Гигакалория'],
-			['квт.ч', 'квт.ч', 'Киловат, час'],
-			['л', 'литр', 'Литр'],
-			['м2', 'м2', 'Квадратный метр'],
-			['м3', 'м3', 'Кубический метр'],
-			['м', 'метр', 'Метр'],
-			['на 1 чел', 'на 1 чел', 'на 1 человека'],
-			['кг', 'кг', 'Килограмм'],
-			['т', 'тн', 'Тонна'],
-			['шт', 'штук', 'Штук']
-		];
-		for (var i = 0; i < edizmArray.length; i++) { // Цикл по строкам
-			var tr = tbl.insertRow(); // Создаем строку
-			for (var j = 0; j < edizmArray[i].length; j++) {
-				var td = tr.insertCell();
-                td.appendChild(document.createTextNode(edizmArray[i][j]));
-                td.style.border = '1px solid black';
-			}
-		}
-		var master_table = document.getElementById("master_table");
-		var main_table_panel = document.getElementById("main_table_panel");
-		var master_tableNew = main_table_panel.replaceChild(tbl, master_table);
-		
-		var current_datetime = new Date();
-		footer_message_boxText('Обновлено ' + current_datetime);
-		
+		// Перегрузим всю страницу
+		window.location.reload();
 	};	
-	document.addEventListener("DOMContentLoaded", function() {
-		menu_item_refresh.addEventListener("click", refreshMain);
-	});
-	function menu_video_commonClick() {
-		footer_message_boxText('Обучающее видео общее');
-	};	
-	function menu_addClick() {
-		footer_message_boxText('Запись добавлена');
-		button_add.blur() /* Уберем фокус */
-	};	
-	function elem_blur(elem) {
-		elem.blur(); /* Эта строчка не работает почему то */
-		button_edit.blur();
-	}
   </script>
  </head>
  <body>
-	<div class="header">
-		<div class="header_left_block">	
-			<div class="header_item_left">Геликон</div>
-			<div class="header_item_left">Продукты</div>
-		</div>
-		<div class="header_right_block">
-			<div class="header_item_right">Выйти</div>
-			<div class="header_item_right">Пользователь</div>
-			<div class="header_item_right">Помощь</div>
-			<div class="header_item_right">Настройка</div>
-		</div>
-	</div>
-	<div class="global_menu">
-		<button id="buttonMain" onclick="buttonMainClick()">Главная</button>
-		<button id="buttonCatalog">Справочники</button>
-		<button id="button_module">Модули</button>
-		<button id="button-setting">Настройки</button>
-		<button id="button_analiz">Бизнес анализ</button>
-	</div>
-	<div class="global_menu">
-		<ul>
-			<li><a href="">Главная</a></li>
-			<li><a id="catalog-global_menu" href="">Справочники</a></li>
-			<li><a href="">Модули</a></li>
-			<li><a href="">Настройки</a></li>
-			<li id="menu_analiz"><a href="">Бизнес анализ</a></li>
-		</ul>
-	</div>
 	<div class="main_menu">
 		<div class="dropdown" id="dropdown_command">
 			<button class="dropbtn"  id="dropbtn_command">Команды</button>

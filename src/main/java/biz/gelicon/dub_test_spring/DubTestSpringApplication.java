@@ -12,8 +12,6 @@ import java.util.List;
                              включенные в проект, используя аннотацию @ComponentScan */
 public class DubTestSpringApplication {
 
-	List<DatebaseConn> datebaseConnList = new ArrayList<>();
-
 	public static void main(String[] args) {
 		SpringApplication.run(DubTestSpringApplication.class, args);
 	}

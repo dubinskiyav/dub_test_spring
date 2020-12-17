@@ -5,13 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +63,9 @@ public class EdizmController {
         }
         // Передадим в модель
         model.addAttribute("edizmlist", edizmList);
+        model.addAttribute("alias", DatebaseConn.datebaseConn.alias);
+
+
 
         logger.info("edizmController - Finish");
         return "edizm"; /* метод контроллера должен вернуть имя представления.
