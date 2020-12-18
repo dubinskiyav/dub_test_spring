@@ -53,7 +53,7 @@ public class EdizmController {
                         + " ORDER BY E.edizm_id ");
                 ps.setInt(1, -123);
             } else {
-                // почти миллион записей
+                // Много записей
                 ps = connection.prepareStatement(""
                         + " SELECT E.edizm_id, "
                         + "        E.edizm_name, "
@@ -65,11 +65,9 @@ public class EdizmController {
                         + "        edizm E2,"
                         + "        edizm E3,"
                         + "        edizm E4,"
-                        + "        edizm E5,  "
-                        + "        edizm E6  "
+                        + "        edizm E5  "
                         + " WHERE  E.edizm_id != ? "
-                        + " ORDER BY E6.edizm_id,"
-                        + "          E5.edizm_id,"
+                        + " ORDER BY E5.edizm_id,"
                         + "          E4.edizm_id,"
                         + "          E3.edizm_id, "
                         + "          E2.edizm_id,"

@@ -100,7 +100,6 @@
 	.button_action:hover { background: #ddd; } /* при наведении курсора мышки */
 	.button_action:active { background: Silver; } /* при нажатии */
 	.content_panel { /* Основаня панель */
-		1min-height: 300px;
 		background: Lime; 
 		margin-bottom: 40px; /* Чтобы не залезало под footer */
 	}
@@ -108,6 +107,30 @@
 		1min-height: 100px;
 		background: #f1f1f1; 
 		border: solid 0px red;
+	}
+	.table_header { /* Заголовок таблицы */
+		height: 20px;
+		border: solid LightGrey; 
+		border-width: 0px 0px 1px 0px;
+		background: #f1f1f1; 
+	}
+	.table_header_left_block { /* Левый блок */
+		float: left; 
+	}
+	.table_header_item_left {
+		text-align: left;
+		color: red;
+		text-transform: uppercase;
+		font-weight: bold;
+		float: left; 
+		padding: 0px 5px 0px 5px;
+	}
+	.table_header_right_block { /* Правый блок */
+		float: right;
+	}
+	.table_header_item_right {
+		float: right; 
+		padding: 0px 5px 0px 5px;
 	}
 	.master_table { /* Мастер таблица */
 		text-align: left;
@@ -159,7 +182,7 @@
 		right: 0px; 
 		bottom: 0px;    
 		left: 0px;
-		border: 3px solid red;
+		border: 1px solid LightGrey;
 	}
 	/* Click */
 	.master_table .active td:after {
@@ -169,15 +192,14 @@
 		right: 0px;    
 		bottom: 0px;    
 		left: 0px;
-		width: 105%;
-		border-top: 3px solid orange;
-		border-bottom: 3px solid orange;
+		border-top: 1px solid LightGrey;
+		border-bottom: 1px solid LightGrey;
 	}
 	.master_table .active td:first-child:after {
-		border-left: 3px solid orange;
+		border-left: 1px solid LightGrey;
 	}
 	.master_table .active td:last-child:after {
-		border-right: 3px solid orange;
+		border-right: 1px solid LightGrey;
 		width: auto;
 	}
 	.master_table td.active:after { /* Click */
@@ -187,7 +209,8 @@
 		right: 0px; 
 		bottom: 0px;    
 		left: 0px;
-		border: 5px solid red !important;
+		1border: 2px solid LightGrey !important;
+		border: 2px solid LightGrey;
 	}
   </style> 
   <script   /* Подключаем JQuery */
@@ -233,6 +256,34 @@
 		window.location.reload();
 	};	
   </script>
+  <!-- Выбираем элемент по клику -->
+  <script>
+	(function () {
+		if (window.addEventListener) {
+			window.addEventListener('load', run, false);
+		} else if (window.attachEvent) {
+			window.attachEvent('onload', run);
+		}
+		function run() {
+			var t = document.getElementById('master_table');
+			t.onclick = function (event) {
+				event = event || window.event; //IE8
+				var target = event.target || event.srcElement;
+				while (target && target.nodeName != 'TR') { // find TR
+					target = target.parentElement;
+				}
+				//if (!target) { return; } //tr should be always found
+				var cells = target.cells; //cell collection - https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableRowElement
+				//var cells = target.getElementsByTagName('td'); //alternative
+				if (!cells.length || target.parentNode.nodeName == 'THEAD') {
+					return;
+				}
+				var f1 = document.getElementById('edizm_id');
+				f1.value = cells[0].innerHTML;
+			};
+		}
+	})();
+ </script> 
  </head>
  <body>
 	<div class="main_menu">
@@ -282,8 +333,19 @@
 	</div>
 	<div class="content_panel">
 		<div class="main_table_panel" id="main_table_panel">
+			<div class="table_header">
+				<div class="table_header_left_block">
+					<div class="table_header_item_left">
+						СПИСОК ЕДИНИЦ ИЗМЕРЕНИЯ
+					</div>
+				</div>
+				<div class="table_header_right_block">
+					<div class="table_header_item_right" id="master_table_record_count">
+						<span th:text="${masterCount}">0</span>
+					</div>
+				</div>
+			</div>
 			<table class="master_table" id="master_table">
-				<caption>Единицы измерения</caption>
 				<tr><th>N п/п</th><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
 				<tr th:each="edizm,staterow: ${edizmlist}">
 					<td th:text="${staterow.count}"></td>
@@ -294,6 +356,7 @@
 					<td th:text="${edizm.blockflag}"></td>
 				</tr>
 			</table>
+			edizm_id = <input type="text" id="edizm_id" />
 			<div class="main_table_footer">
 				<span th:text="'Выбрано ' + ${masterCount} + ' записей'">Выбрано NNN записей</span>
 			</div>
