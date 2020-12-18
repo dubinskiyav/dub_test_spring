@@ -17,8 +17,6 @@ import java.util.List;
 public class CapitalController {
 
     List<DatebaseConn> datebaseConnList = new ArrayList<>();
-    Connection connection;
-
 
     private static final Logger logger = LoggerFactory.getLogger(CapitalController.class);
 
@@ -36,34 +34,16 @@ public class CapitalController {
                 "SYSDBA",
                 "masterkey"
         ));
-        // Найдем первый совпадающий с алиасом
-        DatebaseConn datebaseConn = datebaseConnList.stream()
+        // Найдем первый совпадающий с алиасом и присвоим его глобальной переменной
+        DatebaseConn.datebaseConn = datebaseConnList.stream()
                 .filter(a -> a.alias.equals(alias))
                 .findFirst()
                 .orElse(null);
-        if (datebaseConn == null) {throw new RuntimeException("База данныйх не найдена");}
-        // Соединимся с базой данных
-        logger.info("Connecting to Datebase {}.", datebaseConn.alias);
-        try {
-            Class.forName(datebaseConn.driverClassName);
-        } catch (ClassNotFoundException cnfe) {
-            logger.error("Database provider class not found.", cnfe);
-            return null;
+        if (DatebaseConn.datebaseConn == null) {
+            throw new RuntimeException("База данныйх не найдена");
         }
-        try {
-            connection = DriverManager.getConnection(
-                    datebaseConn.url,
-                    datebaseConn.user,
-                    datebaseConn.passWord
-            );
-        } catch (SQLException throwables) {
-            logger.error("Database connection error.", throwables);
-            return null;
-        }
-        // Присвоим глобальную переменную
-        DatebaseConn.connection = connection;
-        DatebaseConn.datebaseConn = datebaseConn;
-        logger.error("Database connected");
+        // Присвоим глобальную переменную соединившись с бд
+        DatebaseConn.connection = DatebaseConn.datebaseConn.checkConnection(null);
 
         return "capital";
     }

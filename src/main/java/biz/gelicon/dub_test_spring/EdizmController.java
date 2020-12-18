@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,23 +31,55 @@ public class EdizmController {
         logger.info("edizmController - Start");
 
         // Считаем глобальную переменную
-        connection = DatebaseConn.connection;
+        //connection = DatebaseConn.connection;
+        // Перепроверим коннект
+        connection = DatebaseConn.datebaseConn.checkConnection(DatebaseConn.connection);
 
         // Считаем единицы измерений
         List<Edizm> edizmList = new ArrayList<>();
+        int masterCount = 0;
         // Простой цикл
         try {
-            PreparedStatement ps = connection.prepareStatement(""
-                    + " SELECT edizm_id, "
-                    + "        edizm_name, "
-                    + "        edizm_notation, "
-                    + "        edizm_blockflag, "
-                    + "        edizm_code "
-                    + " FROM   edizm "
-                    + " WHERE  edizm_id != ? "
-                    + " ORDER BY edizm_id ");
-            ps.setInt(1, -123);
+            PreparedStatement ps = null;
+            if (true) {
+                ps = connection.prepareStatement(""
+                        + " SELECT E.edizm_id, "
+                        + "        E.edizm_name, "
+                        + "        E.edizm_notation, "
+                        + "        E.edizm_blockflag, "
+                        + "        E.edizm_code "
+                        + " FROM   edizm E"
+                        + " WHERE  E.edizm_id != ? "
+                        + " ORDER BY E.edizm_id ");
+                ps.setInt(1, -123);
+            } else {
+                // почти миллион записей
+                ps = connection.prepareStatement(""
+                        + " SELECT E.edizm_id, "
+                        + "        E.edizm_name, "
+                        + "        E.edizm_notation, "
+                        + "        E.edizm_blockflag, "
+                        + "        E.edizm_code "
+                        + " FROM   edizm E,  "
+                        + "        edizm E1, "
+                        + "        edizm E2,"
+                        + "        edizm E3,"
+                        + "        edizm E4,"
+                        + "        edizm E5,  "
+                        + "        edizm E6  "
+                        + " WHERE  E.edizm_id != ? "
+                        + " ORDER BY E6.edizm_id,"
+                        + "          E5.edizm_id,"
+                        + "          E4.edizm_id,"
+                        + "          E3.edizm_id, "
+                        + "          E2.edizm_id,"
+                        + "          E1.edizm_id,"
+                        + "          E.edizm_id ");
+                ps.setInt(1, -123);
+            }
+            logger.info("executeQuery Start");
             ResultSet rs = ps.executeQuery();
+            logger.info("executeQuery Finish");
             while (rs.next()) {
                 edizmList.add(new Edizm(
                         rs.getInt("edizm_id"),
@@ -55,7 +88,9 @@ public class EdizmController {
                         rs.getInt("edizm_blockflag"),
                         rs.getString("edizm_code")
                 ));
+                masterCount++;
             }
+            logger.info("next Finish");
             ps.close();
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -63,9 +98,8 @@ public class EdizmController {
         }
         // Передадим в модель
         model.addAttribute("edizmlist", edizmList);
+        model.addAttribute("masterCount", masterCount);
         model.addAttribute("alias", DatebaseConn.datebaseConn.alias);
-
-
 
         logger.info("edizmController - Finish");
         return "edizm"; /* метод контроллера должен вернуть имя представления.

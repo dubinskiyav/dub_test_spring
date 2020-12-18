@@ -58,26 +58,29 @@
 
 	#footer { /* Полоска снизу окна */
 		position: fixed; /* Фиксированное положение */
-		left: 5; bottom: 0; /* Левый нижний угол */
-		background: Gainsboro; /* Цвет фона */
+		bottom: 0; /* Внизу */
+		background-color: #f1f1f1;
 		color: black;
-		width: calc(100% - 15px);
-		height: 20px;
+		width: 100%; /* Надо, так как вложенные элементы прибиваются по сторонам */
 		overflow: hidden; /* Отменяем действие float */
 	}
 	#footer_message_box { / Надпись слева /
+		position: absolute;
 		float: left; /* Состыковка с другим слоем по горизонтали */
-		background: yellow; /* Цвет фона */
-		width: 400px;
+		11width: 600px; /* Ограничим, так как по умолчанию ширина блока равна ширине родителя */
+		border: solid LightGrey;
+		border-width: 0px 1px 0px 0px;
+		padding: 0px 5px 0px 5px;
 	}
 	#db_message_box { /* Надпись справа */
-		float: left; /* Состыковка с другим слоем по горизонтали */
-		background: Gainsboro;
-		color: red;
-		min-width: 400px;
+		1color: red;
+		1min-width: 100px;
 		position: absolute;
 		right: 0;
 		text-align: right;
+		border: solid LightGrey;
+		border-width: 0px 0px 0px 1px;
+		padding: 0px 5px 0px 5px;
 	}
 	.PanelButton { /* Панель кнопок-действий */
 		height: 50px;
@@ -99,6 +102,7 @@
 	.content_panel { /* Основаня панель */
 		1min-height: 300px;
 		background: Lime; 
+		margin-bottom: 40px; /* Чтобы не залезало под footer */
 	}
 	.main_table_panel { /* Панель основной таблицы */
 		1min-height: 100px;
@@ -136,6 +140,12 @@
 		border: solid LightGrey;
 		border-width: 0px 0px 1px 0px;
     }
+	.main_table_footer {
+		min-height: 20px;
+		background: #f1f1f1; 
+		border: solid LightGrey;
+		border-width: 1px 0px;
+	}
  </style>
   <script>
     // Считаем переменные из спринга
@@ -152,7 +162,8 @@
 	window.onload = function(){
 		db_message_boxText(alias); // установить алиас снизу справа
 		var current_datetime = new Date();
-		footer_message_boxText('Обновлено ' + current_datetime);
+		var s = current_datetime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'});
+		footer_message_boxText('Обновлено ' + s);
 	};
   </script>
   <script>
@@ -199,14 +210,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer">
-		<div id="footer_message_box">	
-			Геликон
-		</div>
-		<div id="db_message_box">	
-			База
-		</div>
-	</div>
 	<div class="PanelButton">
 		<button class="button_action" id="button_add"><img src="images/button_add.png" title="Добавить" onclick="menu_addClick()" ></button>
 		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить" onmouseout="elem_blur(this)"></button>
@@ -220,8 +223,9 @@
 		<div class="main_table_panel" id="main_table_panel">
 			<table class="master_table" id="master_table">
 				<caption>Единицы измерения</caption>
-				<tr><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
-				<tr th:each="edizm, state : ${edizmlist}">
+				<tr><th>N п/п</th><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
+				<tr th:each="edizm,staterow: ${edizmlist}">
+					<td th:text="${staterow.count}"></td>
 					<td th:text="${edizm.id}"></td>
 					<td th:text="${edizm.code}"></td>
 					<td th:text="${edizm.notation}"></td>
@@ -229,9 +233,21 @@
 					<td th:text="${edizm.blockflag}"></td>
 				</tr>
 			</table>
+			<div class="main_table_footer">
+				<span th:text="'Выбрано ' + ${masterCount} + ' записей'">Выбрано NNN записей</span>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="footer_message_box">	
+			Геликон
+		</div>
+		<div id="db_message_box">	
+			База
 		</div>
 	</div>
 	<!--
+				th:text="${masterCount}"
 	<p th:text="'driverclassname = ' + ${driverclassname}" />
 	<p th:text="'jdbcurl = ' + ${jdbcurl}" />
 	<p th:text="'user = ' + ${user}" />
