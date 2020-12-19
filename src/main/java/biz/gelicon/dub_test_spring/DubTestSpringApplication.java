@@ -43,6 +43,7 @@ public class DubTestSpringApplication implements CommandLineRunner {
 
 	private void testTowntype(){
 		logger.info("testTowntype...Start");
+		logger.info("delete={}",towntypeRepository.delete(200));
 		logger.info("count={}",towntypeRepository.count());
 		logger.info("insert={}",towntypeRepository.insert(new Towntype(200,"ЗОНА","Зона")));
 		logger.info("update={}",towntypeRepository.update(new Towntype(200,"ЛАГЕРЬ","Лагерь")));
@@ -53,7 +54,9 @@ public class DubTestSpringApplication implements CommandLineRunner {
 		towntypeRepository.findByName(s).forEach(t -> logger.info(t.toString()));
 		Towntype towntype = towntypeRepository.findById(200).orElse(null);
 		logger.info("findById={}",towntype.toString());
-		int id = 200;
+		int id = 2001;
+		logger.info("getNameById({}) = {}",id,towntypeRepository.getNameById(id));
+		id = 200;
 		logger.info("getNameById({}) = {}",id,towntypeRepository.getNameById(id));
 
 		logger.info("delete={}",towntypeRepository.delete(200));

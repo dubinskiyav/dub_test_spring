@@ -130,22 +130,15 @@ public class JdbcTowntypeRepository implements TowntypeRepository {
 
     @Override
     public String getNameById(Integer id) {
+        // todo Сделать по человечески
         String sql = ""
-                + " SELECT towntype_id, "
-                + "        towntype_name, "
-                + "        towntype_code "
+                + " SELECT towntype_name "
                 + " FROM   towntype "
-                + " WHERE  towntype_id = :towntype_id ";
-        // todo Требуется реализация
-        return "Требуется реализация";
-        /*
-        return namedParameterJdbcTemplate.queryForObject(sql,
-                new MapSqlParameterSource("towntype_id", id),
-                (rs, rowNum) ->
-                        rs.getString("towntype_name")
-                        )
-        );
-
-         */
+                + " WHERE  towntype_id = ? ";
+        try {
+            return jdbcTemplate.queryForObject(sql, String.class, id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
