@@ -1,6 +1,7 @@
 package biz.gelicon.dub_test_spring;
 
 import biz.gelicon.dub_test_spring.repository.EdizmRepository;
+import biz.gelicon.dub_test_spring.repository.TowntypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class StartApplication implements CommandLineRunner {
     @Qualifier("NamedParameterJdbcEdizmRepository")
     private EdizmRepository edizmRepository;
 
+    //@Autowired
+    private TowntypeRepository towntypeRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(StartApplication.class, args);
     }
@@ -35,11 +39,17 @@ public class StartApplication implements CommandLineRunner {
     }
 
     private void runJDBC() {
+        if (true) {return;}
+
+        Integer i = towntypeRepository.count();
+        logger.info("Saving...{}",i);
+
+
         List<Edizm> edizmList = Arrays.asList(
-                new Edizm(1,"Ампер","А",0,"а"),
-                new Edizm(2,"Вольт","В",0,"в"),
-                new Edizm(3,"Люмен","Л",0,"лм"),
-                new Edizm(4,"Фунт","Ф",0,"ф")
+                new Edizm(1, "Ампер", "А", 0, "а"),
+                new Edizm(2, "Вольт", "В", 0, "в"),
+                new Edizm(3, "Люмен", "Л", 0, "лм"),
+                new Edizm(4, "Фунт", "Ф", 0, "ф")
         );
         logger.info("[SAVE]");
         edizmList.forEach(edizm -> {
@@ -63,7 +73,7 @@ public class StartApplication implements CommandLineRunner {
         logger.info("[GET_NAME_BY_ID] :{} = {}", edizm_id, edizmRepository.getNameById(edizm_id));
 
         logger.info("[UPDATE] :{}", edizm_id);
-        edizm = new Edizm(2,"Вольтт","ВВ",1,"вв");
+        edizm = new Edizm(2, "Вольтт", "ВВ", 1, "вв");
         logger.info("rows affected: {}", edizmRepository.update(edizm));
 
         logger.info("[DELETE] {}", edizm_id);
