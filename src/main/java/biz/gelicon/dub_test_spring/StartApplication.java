@@ -1,6 +1,7 @@
 package biz.gelicon.dub_test_spring;
 
 import biz.gelicon.dub_test_spring.repository.EdizmRepository;
+import biz.gelicon.dub_test_spring.repository.JdbcEdizmRepository;
 import biz.gelicon.dub_test_spring.repository.TowntypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,6 @@ public class StartApplication implements CommandLineRunner {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    //@Qualifier("JdbcEdizmRepository")
-    @Qualifier("NamedParameterJdbcEdizmRepository")
     private EdizmRepository edizmRepository;
 
     //@Autowired
