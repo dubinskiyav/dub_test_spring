@@ -10,12 +10,15 @@
 	</parent>
 	<groupId>biz.gelicon</groupId>
 	<artifactId>dub_test_spring</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dub_test_spring</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
+		<downloadSources>true</downloadSources>
+		<downloadJavadocs>true</downloadJavadocs>
 	</properties>
 
 	<dependencies>
@@ -56,6 +59,23 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.2.18</version>
 		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>3.4.5</version>
+		</dependency>
+		<!-- in-memory database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.3.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -63,6 +83,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
 			</plugin>
 		</plugins>
 	</build>
