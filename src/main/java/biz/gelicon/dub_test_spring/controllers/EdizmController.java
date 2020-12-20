@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -142,8 +143,26 @@ public class EdizmController {
             @RequestParam(value = "name_mask", required = false) String name_mask
     ) {
         logger.info("add - Start");
+        Edizm edizm = new Edizm();
+        // Для пробы
+        edizm.id = 123;
+        edizm.name = "Наименование";
+        edizm.notation = "Обозначение";
+        edizm.code = "Код";
+        model.addAttribute("edizm", edizm);
+        model.addAttribute("blockflagb", edizm.getBlockflagB());
         logger.info("add - Finish");
         return "edizm/edizm_add";
     }
+
+    @RequestMapping(value = "/insertedizm")
+    public String insertedizm(
+            @Valid @ModelAttribute Edizm edizm,
+            Model model
+    ) {
+        logger.info("Inserting " + edizm.toString());
+        return "redirect:/edizm";
+    }
+
 
 }

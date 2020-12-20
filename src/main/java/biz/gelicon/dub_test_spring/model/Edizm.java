@@ -23,6 +23,11 @@ public class Edizm {
         this.code = code;
     }
 
+    public Edizm() {
+        // Значения по умолчанию
+        this.blockflag = 0;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -42,6 +47,12 @@ public class Edizm {
     public String getCode() {
         return code;
     }
+
+    public Boolean getBlockflagB() {
+        return blockflag != null && blockflag != 0;
+    }
+
+    public void setBlockflagB(Boolean b) {blockflag = b ? 1 : 0;}
 
     @Override
     public String toString() {
