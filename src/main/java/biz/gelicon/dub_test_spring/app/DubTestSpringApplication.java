@@ -20,93 +20,95 @@ import java.util.List;
                              содержащий аннотацию @SpringBootApplication и метод main.
                              Spring Boot автоматически сканирует все компоненты,
                              включенные в проект, используя аннотацию @ComponentScan */
-@ComponentScan(basePackages = "biz.gelicon.dub_test_spring.repository") /* Указать Spring, где искать аннотированные классы */
+@ComponentScan(basePackages = { /* Указать Spring, где искать аннотированные классы */
+        "biz.gelicon.dub_test_spring.repository",
+        "biz.gelicon.dub_test_spring.controllers"})
 public class DubTestSpringApplication implements CommandLineRunner {
 
-	private static final Logger logger = LoggerFactory.getLogger(DubTestSpringApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(DubTestSpringApplication.class);
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-
-
-	@Autowired
-	private TowntypeRepository towntypeRepository;
-
-	@Autowired
-	private EdizmRepository edizmRepository;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
 
-	public static void main(String[] args) {
-		SpringApplication.run(DubTestSpringApplication.class, args);
-	}
+    @Autowired
+    private TowntypeRepository towntypeRepository;
 
-	@Override
-	public void run(String... args) throws Exception {
-		logger.info("StartApplication...");
-		if (false) {
-			testEdizm();
-			testTowntype();
-		}
-	}
+    @Autowired
+    private EdizmRepository edizmRepository;
 
-	private void testEdizm(){
-		logger.info("testEdizm...Start");
-		List<Edizm> edizmList = Arrays.asList(
-				new Edizm(1, "Ампер", "А", 0, "а"),
-				new Edizm(2, "Вольт", "В", 0, "в"),
-				new Edizm(3, "Люмен", "Л", 0, "лм"),
-				new Edizm(4, "Фунт", "Ф", 0, "ф")
-		);
-		edizmList.stream().map(e -> e.getId())
-				.forEach(i -> logger.info("delete={}",edizmRepository.delete(i)));
-		logger.info("insert");
-		edizmList.forEach(edizm -> {
-			logger.info("insert...{}", edizm.toString());
-			edizmRepository.insert(edizm);
-		});
-		logger.info("count={}",edizmRepository.count());
-		logger.info("update={}",edizmRepository.update(new Edizm(4,"Фут","ФТ",0,"фт")));
-		logger.info("findAll:");
-		edizmRepository.findAll().forEach(t -> logger.info(t.toString()));
-		String s = "а";
-		logger.info("findByName: {}", s);
-		edizmRepository.findByName(s).forEach(t -> logger.info(t.toString()));
-		int i = 1355549;
-		logger.info("findById({})...",i);
-		Edizm edizm = edizmRepository.findById(i);
-		if (edizm != null) {
-			logger.info(edizm.toString());
-			logger.info("findById({})={}",i,edizm.toString());
-		} else {
-			logger.info("Не нашли с id={}",i);
-		}
-		int id = 2001;
-		logger.info("getNameById({}) = {}",id,edizmRepository.getNameById(id));
-		id = 2;
-		logger.info("getNameById({}) = {}",id,edizmRepository.getNameById(id));
-		edizmList.stream().map(e -> e.getId())
-				.forEach(e -> logger.info("delete={}",edizmRepository.delete(e)));
-	}
 
-	private void testTowntype(){
-		logger.info("testTowntype...Start");
-		logger.info("delete={}",towntypeRepository.delete(200));
-		logger.info("count={}",towntypeRepository.count());
-		logger.info("insert={}",towntypeRepository.insert(new Towntype(200,"ЗОНА","Зона")));
-		logger.info("update={}",towntypeRepository.update(new Towntype(200,"ЛАГЕРЬ","Лагерь")));
-		logger.info("findAll:");
-		towntypeRepository.findAll().forEach(t -> logger.info(t.toString()));
-		String s = "З";
-		logger.info("findByName: {}", s);
-		towntypeRepository.findByName(s).forEach(t -> logger.info(t.toString()));
-		Towntype towntype = towntypeRepository.findById(200).orElse(null);
-		logger.info("findById={}",towntype.toString());
-		int id = 2001;
-		logger.info("getNameById({}) = {}",id,towntypeRepository.getNameById(id));
-		id = 200;
-		logger.info("getNameById({}) = {}",id,towntypeRepository.getNameById(id));
+    public static void main(String[] args) {
+        SpringApplication.run(DubTestSpringApplication.class, args);
+    }
 
-		logger.info("delete={}",towntypeRepository.delete(200));
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        logger.info("StartApplication...");
+        if (false) {
+            testEdizm();
+            testTowntype();
+        }
+    }
+
+    private void testEdizm() {
+        logger.info("testEdizm...Start");
+        List<Edizm> edizmList = Arrays.asList(
+                new Edizm(1, "Ампер", "А", 0, "а"),
+                new Edizm(2, "Вольт", "В", 0, "в"),
+                new Edizm(3, "Люмен", "Л", 0, "лм"),
+                new Edizm(4, "Фунт", "Ф", 0, "ф")
+        );
+        edizmList.stream().map(e -> e.getId())
+                .forEach(i -> logger.info("delete={}", edizmRepository.delete(i)));
+        logger.info("insert");
+        edizmList.forEach(edizm -> {
+            logger.info("insert...{}", edizm.toString());
+            edizmRepository.insert(edizm);
+        });
+        logger.info("count={}", edizmRepository.count());
+        logger.info("update={}", edizmRepository.update(new Edizm(4, "Фут", "ФТ", 0, "фт")));
+        logger.info("findAll:");
+        edizmRepository.findAll().forEach(t -> logger.info(t.toString()));
+        String s = "а";
+        logger.info("findByName: {}", s);
+        edizmRepository.findByName(s).forEach(t -> logger.info(t.toString()));
+        int i = 1355549;
+        logger.info("findById({})...", i);
+        Edizm edizm = edizmRepository.findById(i);
+        if (edizm != null) {
+            logger.info(edizm.toString());
+            logger.info("findById({})={}", i, edizm.toString());
+        } else {
+            logger.info("Не нашли с id={}", i);
+        }
+        int id = 2001;
+        logger.info("getNameById({}) = {}", id, edizmRepository.getNameById(id));
+        id = 2;
+        logger.info("getNameById({}) = {}", id, edizmRepository.getNameById(id));
+        edizmList.stream().map(e -> e.getId())
+                .forEach(e -> logger.info("delete={}", edizmRepository.delete(e)));
+    }
+
+    private void testTowntype() {
+        logger.info("testTowntype...Start");
+        logger.info("delete={}", towntypeRepository.delete(200));
+        logger.info("count={}", towntypeRepository.count());
+        logger.info("insert={}", towntypeRepository.insert(new Towntype(200, "ЗОНА", "Зона")));
+        logger.info("update={}", towntypeRepository.update(new Towntype(200, "ЛАГЕРЬ", "Лагерь")));
+        logger.info("findAll:");
+        towntypeRepository.findAll().forEach(t -> logger.info(t.toString()));
+        String s = "З";
+        logger.info("findByName: {}", s);
+        towntypeRepository.findByName(s).forEach(t -> logger.info(t.toString()));
+        Towntype towntype = towntypeRepository.findById(200).orElse(null);
+        logger.info("findById={}", towntype.toString());
+        int id = 2001;
+        logger.info("getNameById({}) = {}", id, towntypeRepository.getNameById(id));
+        id = 200;
+        logger.info("getNameById({}) = {}", id, towntypeRepository.getNameById(id));
+
+        logger.info("delete={}", towntypeRepository.delete(200));
+    }
 }
 
