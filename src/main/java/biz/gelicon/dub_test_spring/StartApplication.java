@@ -50,10 +50,10 @@ public class StartApplication implements CommandLineRunner {
                 new Edizm(3, "Люмен", "Л", 0, "лм"),
                 new Edizm(4, "Фунт", "Ф", 0, "ф")
         );
-        logger.info("[SAVE]");
+        logger.info("[INSERT]");
         edizmList.forEach(edizm -> {
             logger.info("Saving...{}", edizm.toString());
-            edizmRepository.save(edizm);
+            edizmRepository.insert(edizm);
         });
 
         logger.info("[COUNT] Total edizms: {}", edizmRepository.count());
@@ -62,7 +62,7 @@ public class StartApplication implements CommandLineRunner {
 
         int edizm_id = 2;
         logger.info("[FIND_BY_ID] :{}", edizm_id);
-        Edizm edizm = edizmRepository.findById(edizm_id).orElseThrow(IllegalArgumentException::new);
+        Edizm edizm = edizmRepository.findById(edizm_id);
         logger.info("{}", edizm);
 
         String s = "а";
@@ -76,7 +76,7 @@ public class StartApplication implements CommandLineRunner {
         logger.info("rows affected: {}", edizmRepository.update(edizm));
 
         logger.info("[DELETE] {}", edizm_id);
-        logger.info("rows affected: {}", edizmRepository.deleteById(edizm_id));
+        logger.info("rows affected: {}", edizmRepository.delete(edizm_id));
 
         logger.info("[FIND_ALL] {}", edizmRepository.findAll());
 

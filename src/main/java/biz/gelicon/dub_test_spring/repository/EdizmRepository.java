@@ -8,17 +8,17 @@ import java.util.Optional;
 public interface EdizmRepository {
     int count();
 
-    int save(Edizm edizm);
+    int insert(Edizm edizm);
 
     int update(Edizm edizm);
 
-    int deleteById(Integer id);
+    int delete(Integer id);
 
     List<Edizm> findAll();
 
     List<Edizm> findByName(String name);
 
-    Optional<Edizm> findById(Integer id);
+    Edizm findById(Integer id);
 
     String getNameById(Integer id);
 

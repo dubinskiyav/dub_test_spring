@@ -2,6 +2,7 @@ package biz.gelicon.dub_test_spring;
 
 // Обязательно public иначе в шаблоне не увидит!!!! и поля тоже public !!!!
 public class Edizm {
+
     public Integer id;
     public String name;
     public String notation;
@@ -21,9 +22,31 @@ public class Edizm {
         this.blockflag = blockflag;
         this.code = code;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNotation() {
+        return notation;
+    }
+
+    public Integer getBlockflag() {
+        return blockflag;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
     @Override
     public String toString() {
-        return id.toString() + " " + name + " " + notation + " " + blockflag.toString() + " " + code;
+        return id.toString() + " " + name + " " + notation + " " + blockflag.toString() + " "
+                + code;
     }
 
 }

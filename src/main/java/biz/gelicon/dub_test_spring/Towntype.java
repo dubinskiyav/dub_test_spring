@@ -1,26 +1,30 @@
 package biz.gelicon.dub_test_spring;
 
 public class Towntype {
+
     public Integer id;
     public String name;
     public String code;
-    public Towntype (
+
+    public Towntype(
             Integer id,
-             String name,
-             String code
+            String name,
+            String code
     ) {
         this.id = id;
         this.name = name;
         this.code = code;
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return id;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public String getCode(){
+
+    public String getCode() {
         return code;
     }
 
