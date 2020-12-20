@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="images/gelicon_icon.png" type="image/x-icon">
+	<title>Добавление Единицы измерения</title>
+  <style type="text/css">
+	body { /* Именно так, без точки */
+		1margin: 0; /* Убираем отступы */
+	}
+	.body {
+		font-size: 20px; /* Размер шрифта */
+		border: solid 2px red;
+	}
+    .field {
+        margin-top: 30px;
+    }
+
+    .field input{
+        position: fixed;
+        left: 200px;
+		float: left;
+    }
+	.PanelButton {
+        margin-top: 30px;
+		height: 50px;
+		width: 100%;
+		border: 1px solid LightGrey;
+	}
+	.button_action { /* Кнопка-действие */
+		height: 100%;
+		width: 200px;
+		border: solid 0px;
+		vertical-align: middle;
+		padding: 0;
+		margin: 0;
+        margin-left: 10px;
+		float:left;
+	}
+  </style> 
+  <script>
+    // Считаем переменные из спринга
+	var alias = "[[${alias}]]";
+	// Текст внизу слева
+	function footer_message_boxText(msg) {
+		document.getElementById('footer_message_box').textContent = msg;
+	};
+  </script>
+ </head>
+ <body>
+	<h1>Добавить единицу измерения</h1>
+    <div class="field">Наименование*: <input type="text" value="Мешок" required placeholder="Введите наименование"></div>
+    <div class="field">Обозначение*: <input type="text"  value="Меш" required placeholder="Введите обозначение"></div>
+    <div class="field">Возможность изменения*: <input type="checkbox" checked></p></div>
+    <div class="field">Код*: <input type="text"  value="мш" required placeholder="Введите код"></div>
+	<div class="PanelButton">
+		<button class="button_action" id="button_ok"><img src="images/button_ok.png" title="Согласен">Согласен</button>
+		<button class="button_action" id="button_cancel"><img src="images/button_cancel.png" title="Отказ">Отказ</button>
+	</div>
+ </body>
+</html>

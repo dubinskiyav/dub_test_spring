@@ -4,11 +4,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="images/gelicon_icon.png" type="image/x-icon">
 	<title>Единицы измерения</title>
+	<div th:replace="fragments/general :: header"></div>
   <style type="text/css">
-	body { /* Именно так, без точки */
+	1body { /* Именно так, без точки */
 		margin: 0; /* Убираем отступы */
 	}
-	.body {
+	.1body {
 		font-size: 20px; /* Размер шрифта */
 		border: solid 2px red;
 	}
@@ -254,6 +255,11 @@
 	function refreshMain() {
 		// Перегрузим всю страницу
 		window.location.reload();
+	};	
+	function menu_addClick() {
+		// Перейдем на страницу добавления
+		var url = '/edizm_add';
+		document.location.href = url;
 	};	
   </script>
   <!-- Выбираем элемент по клику -->
