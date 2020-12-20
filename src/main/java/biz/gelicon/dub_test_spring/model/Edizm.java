@@ -31,24 +31,29 @@ public class Edizm {
     public Integer getId() {
         return id;
     }
+    public void setId(Integer id) {this.id = id;}
 
     public String getName() {
         return name;
     }
+    public void setName(String name) {this.name = name;}
 
     public String getNotation() {
         return notation;
     }
+    public void setNotation(String notation) {this.notation = notation;}
 
     public Integer getBlockflag() {
         return blockflag;
     }
+    public void setBlockflag(Integer blockflag) {this.blockflag = blockflag;}
 
     public String getCode() {
         return code;
     }
+    public void setCode(String code) {this.code = code;}
 
-    public Boolean getBlockflagB() {
+    public Boolean isBlockflagB() {
         return blockflag != null && blockflag != 0;
     }
 
@@ -56,7 +61,7 @@ public class Edizm {
 
     @Override
     public String toString() {
-        return id.toString() + " " + name + " " + notation + " " + blockflag.toString() + " "
+        return "edizm = " + id.toString() + " " + name + " " + notation + " " + blockflag.toString() + " "
                 + code;
     }
 

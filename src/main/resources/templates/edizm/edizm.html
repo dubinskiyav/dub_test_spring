@@ -261,6 +261,14 @@
 		var url = '/edizm_add';
 		document.location.href = url;
 	};	
+	function menu_deleteClick() {
+		var edizm_id = th:"${edizm.id}"
+		footer_message_boxText('Удаление...' + edizm_id);
+		return;
+		// Перейдем на страницу удаления
+		var url = '/edizm_delete/';
+		document.location.href = url;
+	};	
   </script>
   <!-- Выбираем элемент по клику -->
   <script>
@@ -331,7 +339,7 @@
 	<div class="PanelButton">
 		<button class="button_action" id="button_add"><img src="images/button_add.png" title="Добавить" onclick="menu_addClick()" ></button>
 		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить" onmouseout="elem_blur(this)"></button>
-		<button class="button_action"><img src="images/button_delete.png" title="Удалить"></button>
+		<button class="button_action"><img src="images/button_delete.png" title="Удалить" onclick="menu_deleteClick()"></button>
 		<button class="button_action"><img src="images/button_refresh.png" title="Обновить" onclick="refreshMain()"></button>
 		<button class="button_action" id="button_filter"><img src="images/button_filter.png" title="Фильтр"></button>
 		<button class="button_action"><img src="images/button_print.png" title="Печать" onclick="printButton()"></button>
@@ -351,6 +359,7 @@
 					</div>
 				</div>
 			</div>
+			<p th:text="'edizm_id = ' + ${edizm.id}" />
 			<table class="master_table" id="master_table">
 				<tr><th>N п/п</th><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
 				<tr th:each="edizm,staterow: ${edizmlist}">
