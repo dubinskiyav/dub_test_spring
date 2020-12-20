@@ -1,14 +1,16 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.app;
 
+import biz.gelicon.dub_test_spring.model.Edizm;
+import biz.gelicon.dub_test_spring.model.Towntype;
 import biz.gelicon.dub_test_spring.repository.EdizmRepository;
 import biz.gelicon.dub_test_spring.repository.TowntypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Arrays;
@@ -18,12 +20,14 @@ import java.util.List;
                              содержащий аннотацию @SpringBootApplication и метод main.
                              Spring Boot автоматически сканирует все компоненты,
                              включенные в проект, используя аннотацию @ComponentScan */
+@ComponentScan(basePackages = "biz.gelicon.dub_test_spring.repository") /* Указать Spring, где искать аннотированные классы */
 public class DubTestSpringApplication implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(DubTestSpringApplication.class);
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+
 
 	@Autowired
 	private TowntypeRepository towntypeRepository;
@@ -39,9 +43,10 @@ public class DubTestSpringApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("StartApplication...");
-		testEdizm();
-		testTowntype();
-
+		if (false) {
+			testEdizm();
+			testTowntype();
+		}
 	}
 
 	private void testEdizm(){

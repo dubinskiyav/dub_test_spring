@@ -1,7 +1,6 @@
 package biz.gelicon.dub_test_spring.repository;
 
-import biz.gelicon.dub_test_spring.Edizm;
-import biz.gelicon.dub_test_spring.Towntype;
+import biz.gelicon.dub_test_spring.model.Towntype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class JdbcTowntypeRepository implements TowntypeRepository {
+public class TowntypeRepositoryJdbc implements TowntypeRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(JdbcTowntypeRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(TowntypeRepositoryJdbc.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

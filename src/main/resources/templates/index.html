@@ -7,7 +7,9 @@
   <title></title>
   <script>
 	function capitalClick() {
-		var url = '/capital';
+		var url = './capital';
+		document.location.href = url;
+		return;
 		var delimiter = '?';
 		var alias = document.getElementById("alias").value;
 		if (alias) {
@@ -19,9 +21,6 @@
   </script>
  </head>
  <body>
-	<div>
-		<p><b>База: </b><input type="text" size="40" value="PS_DEVELOP_TRUNK" id="alias">
-	</div>
 	<div>
 		<button class="button_capital" id="button_capital1" title="Система Капитал" onclick="capitalClick()"><img th:src="@{images/capital.png}">Капитал CSE</button>
 	</div>

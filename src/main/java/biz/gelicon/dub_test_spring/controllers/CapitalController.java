@@ -1,5 +1,6 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.controllers;
 
+import biz.gelicon.dub_test_spring.utils.DatebaseConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,11 @@ public class CapitalController {
     private static final Logger logger = LoggerFactory.getLogger(CapitalController.class);
 
     @RequestMapping(value = "/capital")
-    public String edizmController(
-            @RequestParam(name = "alias", required = false, defaultValue = "PS_DEVELOP_TRUNK") String alias,
+    public String capitalController(
             Model model
     ) {
-        logger.info("Capital start. " + alias);
+        logger.info("Capital start. ");
+        String alias = "PS_DEVELOP_TRUNK";
         // Заполним массив алиасов баз данных, пока просто вручную
         datebaseConnList.add(new DatebaseConn(
                 "PS_DEVELOP_TRUNK",

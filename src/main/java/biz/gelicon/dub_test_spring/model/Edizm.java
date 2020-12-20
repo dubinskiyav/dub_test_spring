@@ -1,4 +1,4 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.model;
 
 // Обязательно public иначе в шаблоне не увидит!!!! и поля тоже public !!!!
 public class Edizm {

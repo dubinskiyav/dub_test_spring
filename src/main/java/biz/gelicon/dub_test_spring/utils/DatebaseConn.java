@@ -1,4 +1,4 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +14,11 @@ public class DatebaseConn {
 
     private static final Logger logger = LoggerFactory.getLogger(DatebaseConn.class);
 
-    String alias;
-    String driverClassName;
-    String url;
-    String user;
-    String passWord;
+    public String alias;
+    public String driverClassName;
+    public String url;
+    public String user;
+    public String passWord;
 
     public static Connection connection; // Текущий коннект
     public static DatebaseConn datebaseConn; // Текущая база данных
@@ -26,7 +26,7 @@ public class DatebaseConn {
     DatebaseConn() {
     }
 
-    DatebaseConn(
+    public DatebaseConn(
             String alias,
             String driverClassName,
             String url,

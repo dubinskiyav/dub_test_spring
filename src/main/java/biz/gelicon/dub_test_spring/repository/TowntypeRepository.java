@@ -1,7 +1,6 @@
 package biz.gelicon.dub_test_spring.repository;
 
-import biz.gelicon.dub_test_spring.Edizm;
-import biz.gelicon.dub_test_spring.Towntype;
+import biz.gelicon.dub_test_spring.model.Towntype;
 
 import java.util.List;
 import java.util.Optional;

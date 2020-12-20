@@ -1,8 +1,6 @@
 package biz.gelicon.dub_test_spring.repository;
 
-import biz.gelicon.dub_test_spring.Edizm;
-import biz.gelicon.dub_test_spring.EdizmController;
-import biz.gelicon.dub_test_spring.Towntype;
+import biz.gelicon.dub_test_spring.model.Edizm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Repository
-public class JdbcEdizmRepository implements EdizmRepository {
+public class EdizmRepositoryJdbc implements EdizmRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(JdbcEdizmRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(EdizmRepositoryJdbc.class);
 
     // Spring Boot создаст и отконфигурирует DataSource и JdbcTemplate
     // для этого добавить @Autowired

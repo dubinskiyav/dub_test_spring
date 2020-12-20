@@ -1,9 +1,8 @@
 package biz.gelicon.dub_test_spring.repository;
 
-import biz.gelicon.dub_test_spring.Edizm;
+import biz.gelicon.dub_test_spring.model.Edizm;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EdizmRepository {
     int count();

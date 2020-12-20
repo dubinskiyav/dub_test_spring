@@ -1,4 +1,4 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.model;
 
 public class Towntype {
 

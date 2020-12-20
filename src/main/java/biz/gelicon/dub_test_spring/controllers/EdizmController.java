@@ -1,5 +1,7 @@
-package biz.gelicon.dub_test_spring;
+package biz.gelicon.dub_test_spring.controllers;
 
+import biz.gelicon.dub_test_spring.utils.DatebaseConn;
+import biz.gelicon.dub_test_spring.model.Edizm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
