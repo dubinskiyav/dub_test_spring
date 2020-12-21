@@ -4,6 +4,7 @@ import biz.gelicon.dub_test_spring.model.Edizm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -39,6 +40,10 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
     @Override
     public int insert(Edizm edizm) {
         logger.info("Saving...{}", edizm.toString());
+        // Как то надо получить значение edizm_id
+        String sql = "SELECT nextval('town_id_gen')";
+        Integer town_id = (Integer) jdbcTemplate.queryForObject(sql,
+                new BeanPropertyRowMapper(Edizm.class),Integer.class);
         return jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
                         + "   edizm_id, "

@@ -28,6 +28,9 @@ public class Edizm {
         this.blockflag = 0;
     }
 
+    // Обязательнго геттеры и сеттеры,
+    // иначе не будет работать передача в форму и из формы
+
     public Integer getId() {
         return id;
     }
@@ -53,10 +56,11 @@ public class Edizm {
     }
     public void setCode(String code) {this.code = code;}
 
+    // Фиктивное поле BlockflagB типа boolean для CheckBox в форме
+    // Геттеры на поля типа boolean начитаются с is
     public Boolean isBlockflagB() {
         return blockflag != null && blockflag != 0;
     }
-
     public void setBlockflagB(Boolean b) {blockflag = b ? 1 : 0;}
 
     @Override

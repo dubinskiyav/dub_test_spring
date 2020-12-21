@@ -261,14 +261,6 @@
 		var url = '/edizm_add';
 		document.location.href = url;
 	};	
-	function menu_deleteClick() {
-		var edizm_id = th:"${edizm.id}"
-		footer_message_boxText('Удаление...' + edizm_id);
-		return;
-		// Перейдем на страницу удаления
-		var url = '/edizm_delete/';
-		document.location.href = url;
-	};	
   </script>
   <!-- Выбираем элемент по клику -->
   <script>
@@ -359,7 +351,6 @@
 					</div>
 				</div>
 			</div>
-			<p th:text="'edizm_id = ' + ${edizm.id}" />
 			<table class="master_table" id="master_table">
 				<tr><th>N п/п</th><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
 				<tr th:each="edizm,staterow: ${edizmlist}">
