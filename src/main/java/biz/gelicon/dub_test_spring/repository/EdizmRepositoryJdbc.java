@@ -42,10 +42,6 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
     public int insert(Edizm edizm) {
         logger.info("Saving...{}", edizm.toString());
         // Как то надо получить значение edizm_id
-        //String sql = "SELECT nextval('town_id_gen')";
-        //Integer town_id = (Integer) jdbcTemplate.queryForObject(sql,
-        //        new BeanPropertyRowMapper(Edizm.class),Integer.class);
-        // Как то надо получить значение edizm_id
         DatebaseUtils datebaseUtils = new DatebaseUtils();
         edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen",jdbcTemplate);
         return jdbcTemplate.update(""
