@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class EdizmController {
                                           обрабатывает HTTP GET запросы на адрес /edizm.
                                           Иными словами, данный метод сработает, если кто-то
                                           перейдет по адресу /edizm. */
+    // Главная форматка
     public String edizm(
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
@@ -140,6 +142,7 @@ public class EdizmController {
                            В данном случае возьмет edizm_null.html а вернет как edizm.html */
     }
 
+    // Форматка добавленя
     @RequestMapping(value = "/edizm_add")
     public String add(
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
@@ -160,6 +163,32 @@ public class EdizmController {
         return "edizm/edizm_add";
     }
 
+    // Форматка добавленя
+    @RequestMapping(value = "/edizm_upd")
+    public String upd(
+            /* пары ключ-значение для передачи данных из Java кода в html страницы */
+            Model model,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "name_mask", required = false) String name_mask
+    ) {
+        logger.info("upd - Start");
+        logger.info("upd - Finish");
+        return "edizm/edizm_add";
+    }
+
+    // Форматка удаления
+    @RequestMapping(value = "/edizm_del/{id}")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String del(
+            Model model,
+            @PathVariable("id") Integer id
+    ) {
+        logger.info("del - Start edizm_id = " + id);
+        logger.info("del - Finish");
+        return "redirect:/edizm";
+    }
+
+    // Выполнение добавления
     @RequestMapping(value = "/postedizm")
     @Transactional(propagation = Propagation.REQUIRED)
     public String postEdizm(

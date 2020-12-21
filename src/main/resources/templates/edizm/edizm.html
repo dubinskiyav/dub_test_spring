@@ -230,6 +230,13 @@
 			$('.master_table td').removeClass('active');
 			$(this).addClass('active');
 		});
+		$('#button_del').click(function(){
+			var id = $("[name='edizm_id']").val();
+			alert('Удалим edizm_id=' + id );
+			// Перейдем на страницу добавления
+			//var url = '/edizm_del/' + $("[name='edizm_id']").val();
+			//document.location.href = url;
+		});
 	});
   </script>
   <script>
@@ -261,9 +268,6 @@
 		var url = '/edizm_add';
 		document.location.href = url;
 	};	
-	function menu_deleteClick() {
-		alert('Удалим');
-	};	
   </script>
   <!-- Выбираем элемент по клику -->
   <script>
@@ -288,7 +292,7 @@
 					return;
 				}
 				var f1 = document.getElementById('edizm_id');
-				f1.value = cells[0].innerHTML;
+				f1.value = cells[1].innerHTML;
 			};
 		}
 	})();
@@ -334,7 +338,7 @@
 	<div class="PanelButton">
 		<button class="button_action" id="button_add"><img src="images/button_add.png" title="Добавить" onclick="menu_addClick()" ></button>
 		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить" onmouseout="elem_blur(this)"></button>
-		<button class="button_action"><img src="images/button_delete.png" title="Удалить" onclick="menu_deleteClick()"></button>
+		<button class="button_action" id="button_del"><img src="images/button_delete.png" title="Удалить"></button>
 		<button class="button_action"><img src="images/button_refresh.png" title="Обновить" onclick="refreshMain()"></button>
 		<button class="button_action" id="button_filter"><img src="images/button_filter.png" title="Фильтр"></button>
 		<button class="button_action"><img src="images/button_print.png" title="Печать" onclick="printButton()"></button>
@@ -365,7 +369,7 @@
 					<td th:text="${edizm.blockflag}"></td>
 				</tr>
 			</table>
-			edizm_id = <input type="text" id="edizm_id" />
+			edizm_id = <input type="text" id="edizm_id" name="edizm_id"/>
 			<div class="main_table_footer">
 				<span th:text="'Выбрано ' + ${masterCount} + ' записей'">Выбрано NNN записей</span>
 			</div>

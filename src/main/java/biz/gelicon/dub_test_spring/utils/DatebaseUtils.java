@@ -60,13 +60,10 @@ public class DatebaseUtils {
     // Проверяет, не PostgreSQL ли использутеся
     public static Boolean isPostgreSQL() {
         return getDbType().contains("postgresql");
-        // spring.datasource.url=jdbc:postgresql://10.15.3.39:5432/PS_DEVELOP_TRUNK
-        //String url = context.getEnvironment().getProperty("spring.datasource.url");
-        //if (url == null) {return false;}
-        //return url.contains("postgresql");
     }
 
     public static void setDbType(JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) { return; }
         Connection connection = null;
         try {
             connection = jdbcTemplate.getDataSource().getConnection();
