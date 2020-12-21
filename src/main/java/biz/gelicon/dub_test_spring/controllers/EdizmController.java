@@ -203,5 +203,16 @@ public class EdizmController {
         return "redirect:/edizm";
     }
 
+    // Отказ от добавления
+    @RequestMapping(value = "/edizmcancel")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String cancelEdizm(
+            @Valid @ModelAttribute Edizm edizm,
+            BindingResult result,
+            Model model
+    ) {
+        logger.info("Cancel... " + edizm.toString());
+        return "redirect:/edizm";
+    }
 
 }
