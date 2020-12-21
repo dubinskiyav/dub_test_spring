@@ -1,6 +1,7 @@
 package biz.gelicon.dub_test_spring.repository;
 
 import biz.gelicon.dub_test_spring.model.Edizm;
+import biz.gelicon.dub_test_spring.utils.DatebaseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,12 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
     public int insert(Edizm edizm) {
         logger.info("Saving...{}", edizm.toString());
         // Как то надо получить значение edizm_id
-        String sql = "SELECT nextval('town_id_gen')";
-        Integer town_id = (Integer) jdbcTemplate.queryForObject(sql,
-                new BeanPropertyRowMapper(Edizm.class),Integer.class);
+        //String sql = "SELECT nextval('town_id_gen')";
+        //Integer town_id = (Integer) jdbcTemplate.queryForObject(sql,
+        //        new BeanPropertyRowMapper(Edizm.class),Integer.class);
+        // Как то надо получить значение edizm_id
+        DatebaseUtils datebaseUtils = new DatebaseUtils();
+        edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen",jdbcTemplate);
         return jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
                         + "   edizm_id, "

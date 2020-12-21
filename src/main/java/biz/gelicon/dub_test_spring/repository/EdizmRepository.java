@@ -4,6 +4,8 @@ import biz.gelicon.dub_test_spring.model.Edizm;
 
 import java.util.List;
 
+// Мы должны унаследовать свой интерфейс от JpaRepository,
+// иначе Spring Data не предоставит реализацию для нашего репозитория (обязательно).
 public interface EdizmRepository {
     int count();
 
