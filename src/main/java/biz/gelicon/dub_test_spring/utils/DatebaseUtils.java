@@ -3,6 +3,8 @@ package biz.gelicon.dub_test_spring.utils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 // Общие методы работы с базой данных
@@ -56,11 +58,29 @@ public class DatebaseUtils {
     }
 
     // Проверяет, не PostgreSQL ли использутеся
-    public Boolean isPostgreSQL() {
+    public static Boolean isPostgreSQL() {
         return getDbType().contains("postgresql");
         // spring.datasource.url=jdbc:postgresql://10.15.3.39:5432/PS_DEVELOP_TRUNK
         //String url = context.getEnvironment().getProperty("spring.datasource.url");
         //if (url == null) {return false;}
         //return url.contains("postgresql");
+    }
+
+    public static void setDbType(JdbcTemplate jdbcTemplate) {
+        Connection connection = null;
+        try {
+            connection = jdbcTemplate.getDataSource().getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String dbDriverName = null;
+        try {
+            dbDriverName = connection.getMetaData().getDriverName().toLowerCase();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (dbDriverName != null && dbDriverName.contains("postgresql")) {
+            dbType = "postgresql";
+        }
     }
 }

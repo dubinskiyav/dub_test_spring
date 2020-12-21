@@ -52,6 +52,7 @@ public class DubTestSpringApplication implements CommandLineRunner {
             testEdizm();
             testTowntype();
         }
+        DatebaseUtils.setDbType(jdbcTemplate);
     }
 
     private void testEdizm() {
