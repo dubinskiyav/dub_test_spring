@@ -24,27 +24,27 @@
 	.PanelButton {
         margin-top: 30px;
 		height: 50px;
-		width: 100%;
+		display: inline-block; /* Чтобы был по ширине кнопок */
 		border: 1px solid LightGrey;
 	}
 	.button_action { /* Кнопка-действие */
 		height: 100%;
 		width: 200px;
-		border: solid 0px;
 		vertical-align: middle;
 		padding: 0;
 		margin: 0;
         margin-left: 10px;
+        margin-right: 10px;
 		float:left;
+		cursor: pointer;
+		border-radius: 8px;
+		border: 1px solid #cecece;
 	}
   </style> 
   <script>
-    // Считаем переменные из спринга
-	var alias = "[[${alias}]]";
-	// Текст внизу слева
-	function footer_message_boxText(msg) {
-		document.getElementById('footer_message_box').textContent = msg;
-	};
+	function closeWindow() {
+		window.close();
+	};	
   </script>
  </head>
  <body>
@@ -56,8 +56,8 @@
 		<div class="field">Невозможность изменения*: <input type="checkbox" th:checked="*{BlockflagB}"></p></div>
 		<div class="field">Код*: <input type="text" th:field="*{code}" required placeholder="Введите код"></div>
 		<div class="PanelButton">
-			<button class="button_action" id="button_ok"><img src="images/button_ok.png" title="Согласен">Согласен</button>
-			<button class="button_action" id="button_cancel"><img src="images/button_cancel.png" title="Отказ">Отказ</button>
+			<button type="submit" class="button_action">Согласен</button>
+			<button type="submit" class="button_action" formaction = "/edizm111" onclick="closeWindow()">Отказ</button>
 		</div>
 	</form>
  </body>

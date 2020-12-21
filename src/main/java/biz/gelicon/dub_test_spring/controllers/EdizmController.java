@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
@@ -142,7 +143,7 @@ public class EdizmController {
                            В данном случае возьмет edizm_null.html а вернет как edizm.html */
     }
 
-    // Форматка добавленя
+    // Форма добавленя
     @RequestMapping(value = "/edizm_add")
     public String add(
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
@@ -189,15 +190,16 @@ public class EdizmController {
     }
 
     // Выполнение добавления
-    @RequestMapping(value = "/postedizm")
+    @RequestMapping(value = "/postedizm", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String postEdizm(
             @Valid @ModelAttribute Edizm edizm,
             BindingResult result,
             Model model
     ) {
-        logger.info("Inserting " + edizm.toString());
+        logger.info("Inserting... " + edizm.toString());
         edizmRepositoryJdbc.insert(edizm);
+        logger.info(edizm.toString() + " has inserted");
         return "redirect:/edizm";
     }
 
