@@ -187,9 +187,11 @@
 			if(ids.length > 0) {
 				// тут вызов ajax
 				if (confirm('Удалить ' + ids.length + ' записей')) {
-					alert('Да 1');
+					//alert('Да 1');
+					var idsString = ids.join(", ");
+					//alert('idsString 1 = ' + idsString);
 					// Перейдем на страницу удаления
-					var delete_url = '/edizm_del_many';
+					var delete_url = '/edizm_del_ids/' + idsString;
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
@@ -308,7 +310,7 @@
 				</tr>
 				<tbody>
 					<tr th:each="edizm,staterow: ${edizmlist}">
-						<td align="center"><input id="${edizm.id}" type="checkbox"/></td>
+						<td align="center"><input th:id="${edizm.id}" type="checkbox"/></td>				
 						<td th:text="${edizm.code}"></td>
 						<td th:text="${edizm.notation}"></td>
 						<td th:text="${edizm.name}"></td>

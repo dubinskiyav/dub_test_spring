@@ -191,16 +191,18 @@ public class EdizmController {
     }
 
     // Множественное удаление
-    @RequestMapping(value = "/edizm_del_many", method = RequestMethod.POST)
+    @RequestMapping(value = "/edizm_del_ids/{ids}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
-    public String del_many(
-            Model model
+    public String delIds(
+            Model model,
+            @PathVariable("ids") String ids
     ) {
-        logger.info("del - Start edizm_id = ");
-        if (false) {
-            Integer i = edizmRepositoryJdbc.delete(1);
-            logger.info("del - Finish with result = " + i);
+        logger.info("delele (" + ids + ")");
+        for (String s : ids.replaceAll("\\s+", "").split(",")) {
+            Integer id = Integer.parseInt(s);
+            Integer i = edizmRepositoryJdbc.delete(id);
         }
+        logger.info("Deleted");
         return "redirect:/edizm";
     }
 
