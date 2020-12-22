@@ -269,10 +269,15 @@
 				</div>
 			</div>
 			<table class="master_table" id="master_table">
-				<tr><th>N п/п</th><th>ИД		</th><th>Код		</th><th>Обозначение</th><th>Наименование		</th><th>Блок</th></tr>
+				<tr>
+		<th class="no-sort dt-body-center sorting_disabled" rowspan="1" colspan="1" style="width: 13px;" aria-label=""><input name="select_all" type="checkbox"></th>
+					<th>Код		</th>
+					<th>Обозначение</th>
+					<th>Наименование		</th>
+					<th>Блок</th>
+				</tr>
 				<tr th:each="edizm,staterow: ${edizmlist}">
-					<td th:text="${staterow.count}"></td>
-					<td th:text="${edizm.id}"></td>
+         <td align="center"><input id="${edizm.id}" type="checkbox"/></td>
 					<td th:text="${edizm.code}"></td>
 					<td th:text="${edizm.notation}"></td>
 					<td th:text="${edizm.name}"></td>
