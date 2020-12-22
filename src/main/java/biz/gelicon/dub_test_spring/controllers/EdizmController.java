@@ -178,14 +178,15 @@ public class EdizmController {
     }
 
     // Форматка удаления
-    @RequestMapping(value = "/edizm_del/{id}")
+    @RequestMapping(value = "/edizm_del/{id}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String del(
             Model model,
             @PathVariable("id") Integer id
     ) {
         logger.info("del - Start edizm_id = " + id);
-        logger.info("del - Finish");
+        Integer i = edizmRepositoryJdbc.delete(id);
+        logger.info("del - Finish with result = " + i);
         return "redirect:/edizm";
     }
 

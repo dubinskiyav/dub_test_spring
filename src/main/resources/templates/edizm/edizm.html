@@ -231,11 +231,18 @@
 			$(this).addClass('active');
 		});
 		$('#button_del').click(function(){
+			// Получим edizm_id
 			var id = $("[name='edizm_id']").val();
-			alert('Удалим edizm_id=' + id );
-			// Перейдем на страницу добавления
-			//var url = '/edizm_del/' + $("[name='edizm_id']").val();
-			//document.location.href = url;
+			if (confirm("Удалить текущую запись?")) {
+				// Перейдем на страницу удаления
+				var delete_url = '/edizm_del/' + $("[name='edizm_id']").val();
+				$.ajax({
+					type:'POST',
+					url : delete_url ,
+				}); 
+			} else {
+				alert('Отказ');
+			}
 		});
 	});
   </script>

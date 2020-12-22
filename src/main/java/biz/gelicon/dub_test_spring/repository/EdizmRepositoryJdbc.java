@@ -91,11 +91,12 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
 
     @Override
     public int delete(Integer id) {
-        return jdbcTemplate.update(""
+        Integer i = jdbcTemplate.update(""
                         + " DELETE FROM edizm "
                         + " WHERE edizm_id = ? ",
                 id
         );
+        return i;
     }
 
     @Override
