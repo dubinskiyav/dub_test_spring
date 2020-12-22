@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Использование jQuery метода .on() (пространства имен)</title>
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script>
+	$( document ).ready(function(){
+	  // *** Первая часть примера *** 
+	  $( "button" ).on( "myEvent.myNamespace.myAnotherNamespace", function( event ){ // задаем функцию при вызове события myEvent и назначаем два пространства имен
+	    console.log( event.namespace ); // выводим в консоль имя пространства имен события
+	  });
+	  $( "button" ).click(function( event ) { // задаем функцию при нажатии на элемент <button>
+	    $( "button" ).trigger( "myEvent.myNamespace" ); // вызываем событие myEvent пространства имен myNamespace 
+	    $( "button" ).trigger( "myEvent.myAnotherNamespace" ); // вызываем событие myEvent пространства имен myAnotherNamespace
+	  });
+	  // *** Вторая часть примера *** 
+	  $( "input" ).on({ // прикрепляем обработчики для элемента <input>
+	    "click": function() { // прикрепляем обработчик для события click
+	      console.log( "Hello" )
+	    },
+	    "click.myNamespace2": function() { // прикрепляем обработчики для события click пространства имен myNamespace2
+	      console.log( "Hello from namespace" )	
+	    }
+	  })
+	  $( "p" ).click(function(){ // задаем функцию при нажатии на элемент <p>
+	    $( "input" ).trigger( "click.myNamespace2" ); // вызываем событие click пространства имен myNamespace2
+	    $( "input" ).off( "click.myNamespace2" ); // отсоединяем событие click пространства имен myNamespace2
+	  });
+	});
+		</script>
+	</head>
+	<body>
+		<button>Клик</button>
+		<input type = "button" value = "клик">
+		<p>trigger input click.myNamespace2 and off event then</p>
+	</body>
+</html>
