@@ -177,7 +177,7 @@ public class EdizmController {
         return "edizm/edizm_add";
     }
 
-    // Форматка удаления
+    // Одиночное удаление
     @RequestMapping(value = "/edizm_del/{id}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String del(
@@ -187,6 +187,20 @@ public class EdizmController {
         logger.info("del - Start edizm_id = " + id);
         Integer i = edizmRepositoryJdbc.delete(id);
         logger.info("del - Finish with result = " + i);
+        return "redirect:/edizm";
+    }
+
+    // Множественное удаление
+    @RequestMapping(value = "/edizm_del_many", method = RequestMethod.POST)
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String del_many(
+            Model model
+    ) {
+        logger.info("del - Start edizm_id = ");
+        if (false) {
+            Integer i = edizmRepositoryJdbc.delete(1);
+            logger.info("del - Finish with result = " + i);
+        }
         return "redirect:/edizm";
     }
 

@@ -180,19 +180,27 @@
   <script type="text/javascript">   /* Код на JQuery */
 	$(document).ready(function(){
 		$('#button_del').click(function(){
-			alert('button_del_1');
 			var ids=[];
 			forSelectRecord("master_table",function(row,chbox) {
 				ids.push(chbox.id);
 			});
 			if(ids.length > 0) {
 				// тут вызов ajax
-				alert('тут вызов ajax');
+				if (confirm('Удалить ' + ids.length + ' записей')) {
+					alert('Да 1');
+					// Перейдем на страницу удаления
+					var delete_url = '/edizm_del_many';
+					$.ajax({
+						type:'POST',
+						url : delete_url ,
+					}); 	
+				} else {
+					alert('Нет');
+				}
 			}
 		});
 	});
 	forSelectRecord = function(tableId,cb) {
-		alert('forSelectRecord_3');
 		var chkbox_all = $('#' + tableId + ' tbody input[type="checkbox"]'); 
         for(var i = 0; i< chkbox_all.length; i++) {
 			if(chkbox_all[i].checked) cb(i,chkbox_all[i]);
