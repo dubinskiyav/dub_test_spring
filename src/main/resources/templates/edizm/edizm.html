@@ -180,9 +180,24 @@
   <script type="text/javascript">   /* Код на JQuery */
 	$(document).ready(function(){
 		$('#button_del').click(function(){
-			alert('button_del_3');		
+			alert('button_del_1');
+			var ids=[];
+			forSelectRecord("master_table",function(row,chbox) {
+				ids.push(chbox.id);
+			});
+			if(ids.length > 0) {
+				// тут вызов ajax
+				alert('тут вызов ajax');
+			}
 		});
 	});
+	forSelectRecord = function(tableId,cb) {
+		alert('forSelectRecord_3');
+		var chkbox_all = $('#' + tableId + ' tbody input[type="checkbox"]'); 
+        for(var i = 0; i< chkbox_all.length; i++) {
+			if(chkbox_all[i].checked) cb(i,chkbox_all[i]);
+        }
+	};
   </script>
   <script>
     // Считаем переменные из спринга
@@ -277,19 +292,21 @@
 			</div>
 			<table class="master_table" id="master_table">
 				<tr>
-		<th class="no-sort dt-body-center sorting_disabled" rowspan="1" colspan="1" style="width: 13px;" aria-label=""><input name="select_all" type="checkbox"></th>
+					<th class="no-sort dt-body-center sorting_disabled" rowspan="1" colspan="1" style="width: 13px;" aria-label=""><input name="select_all" type="checkbox"></th>
 					<th>Код		</th>
 					<th>Обозначение</th>
 					<th>Наименование		</th>
 					<th>Блок</th>
 				</tr>
-				<tr th:each="edizm,staterow: ${edizmlist}">
-         <td align="center"><input id="${edizm.id}" type="checkbox"/></td>
-					<td th:text="${edizm.code}"></td>
-					<td th:text="${edizm.notation}"></td>
-					<td th:text="${edizm.name}"></td>
-					<td th:text="${edizm.blockflag}"></td>
-				</tr>
+				<tbody>
+					<tr th:each="edizm,staterow: ${edizmlist}">
+						<td align="center"><input id="${edizm.id}" type="checkbox"/></td>
+						<td th:text="${edizm.code}"></td>
+						<td th:text="${edizm.notation}"></td>
+						<td th:text="${edizm.name}"></td>
+						<td th:text="${edizm.blockflag}"></td>
+					</tr>
+				</tbody>
 			</table>
 			<div class="main_table_footer">
 				<span th:text="'Выбрано ' + ${masterCount} + ' записей'">Выбрано NNN записей</span>
