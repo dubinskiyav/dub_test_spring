@@ -65,8 +65,12 @@ public class Edizm {
 
     @Override
     public String toString() {
-        return "edizm = " + id.toString() + " " + name + " " + notation + " " + blockflag.toString() + " "
-                + code;
+        return "edizm{"
+                + "id=" + id + ", "
+                + "name=" + name + ", "
+                + "notation=" + notation + ", "
+                + "blockflag=" + blockflag + ", "
+                + "code=" + code +"}";
     }
 
 }

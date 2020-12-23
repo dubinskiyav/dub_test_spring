@@ -154,11 +154,7 @@ public class EdizmController {
         logger.info("add - Start");
         Edizm edizm = new Edizm();
         // Для пробы
-        edizm.id = 123;
-        edizm.name = "Наименование";
-        edizm.notation = "Обозначение";
-        edizm.code = "Код";
-
+        edizm.setBlockflagB(false);
         model.addAttribute("edizm", edizm);
         logger.info("add - Finish");
         return "edizm/edizm_add";
@@ -209,7 +205,7 @@ public class EdizmController {
         return "redirect:/edizm";
     }
 
-    // Выполнение добавления
+    // Выполнение добавления или изменения
     @RequestMapping(value = "/postedizm", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String postEdizm(
@@ -217,9 +213,15 @@ public class EdizmController {
             BindingResult result,
             Model model
     ) {
-        logger.info("Inserting... " + edizm.toString());
-        edizmRepositoryJdbc.insert(edizm);
-        logger.info(edizm.toString() + " has inserted");
+        if (edizm.getId() == null) {
+            logger.info("Inserting... " + edizm.toString());
+            edizmRepositoryJdbc.insert(edizm);
+            logger.info(edizm.toString() + " has inserted");
+        } else {
+            logger.info("Updating... " + edizm.toString());
+            edizmRepositoryJdbc.update(edizm);
+            logger.info(edizm.toString() + " has updated");
+        }
         return "redirect:/edizm";
     }
 

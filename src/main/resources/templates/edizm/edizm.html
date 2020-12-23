@@ -187,18 +187,16 @@
 			if(ids.length > 0) {
 				// тут вызов ajax
 				if (confirm('Удалить ' + ids.length + ' записей')) {
-					//alert('Да 1');
 					var idsString = ids.join(", ");
-					//alert('idsString 1 = ' + idsString);
 					// Перейдем на страницу удаления
 					var delete_url = '/edizm_del_ids/' + idsString;
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
 					}); 	
-				} else {
-					alert('Нет');
 				}
+				// Перегрузим всю страницу
+				location.reload(true); // // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 			}
 		});
 		$('#button_edit').click(function(){

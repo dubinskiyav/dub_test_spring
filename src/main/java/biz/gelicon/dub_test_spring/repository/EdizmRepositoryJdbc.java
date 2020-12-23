@@ -43,8 +43,8 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
         logger.info("Saving...{}", edizm.toString());
         // Как то надо получить значение edizm_id
         DatebaseUtils datebaseUtils = new DatebaseUtils();
-        edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen",jdbcTemplate);
-        return jdbcTemplate.update(""
+        edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen", jdbcTemplate);
+        Integer i = jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
                         + "   edizm_id, "
                         + "   edizm_name, "
@@ -57,6 +57,7 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
                 edizm.blockflag,
                 edizm.code
         );
+        return i;
     }
 
     @Override
@@ -107,7 +108,8 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
                         + "        edizm_notation, "
                         + "        edizm_blockflag, "
                         + "        edizm_code "
-                        + " FROM   edizm ",
+                        + " FROM   edizm "
+                        + " ORDER BY edizm_name ",
                 (rs, rowNum) ->
                         new Edizm(
                                 rs.getInt("edizm_id"),
