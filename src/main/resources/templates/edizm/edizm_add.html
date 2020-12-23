@@ -45,10 +45,6 @@
 	function closeWindow() {
 		window.close();
 	};	
-	function countRabbits() {
-    for(let i=1; i<=3; i++) {
-      alert("Кролик номер " + i);
-    }
   }
   </script>
  </head>
@@ -58,7 +54,7 @@
 		<input type="hidden" th:field="*{id}">
 		<div class="field">Наименование*: <input type="text" th:field="*{name}" required placeholder="Введите наименование"></div>
 		<div class="field">Обозначение*: <input type="text" th:field="*{notation}" required placeholder="Введите обозначение"></div>
-		<div class="field">Невозможность изменения*: <input type="checkbox" th:checked="*{BlockflagB}"></p></div>
+		<div class="field">Невозможность изменения*: <input type="checkbox" th:checked="*{BlockflagB}" name="blockflagB"></p></div>
 		<div class="field">Код*: <input type="text" th:field="*{code}" required placeholder="Введите код"></div>
 		<div class="PanelButton">
 			<button type="submit" class="button_action">Согласен</button>

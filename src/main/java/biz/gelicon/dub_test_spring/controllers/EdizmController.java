@@ -213,15 +213,9 @@ public class EdizmController {
             BindingResult result,
             Model model
     ) {
-        if (edizm.getId() == null) {
-            logger.info("Inserting... " + edizm.toString());
-            edizmRepositoryJdbc.insert(edizm);
-            logger.info(edizm.toString() + " has inserted");
-        } else {
-            logger.info("Updating... " + edizm.toString());
-            edizmRepositoryJdbc.update(edizm);
-            logger.info(edizm.toString() + " has updated");
-        }
+        logger.info("Saving... " + edizm.toString());
+        int i = edizmRepositoryJdbc.save(edizm);
+        logger.info(edizm.toString() + " has saved");
         return "redirect:/edizm";
     }
 

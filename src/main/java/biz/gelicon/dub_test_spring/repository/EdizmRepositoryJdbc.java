@@ -44,7 +44,7 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
         // Как то надо получить значение edizm_id
         DatebaseUtils datebaseUtils = new DatebaseUtils();
         edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen", jdbcTemplate);
-        Integer i = jdbcTemplate.update(""
+        return jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
                         + "   edizm_id, "
                         + "   edizm_name, "
@@ -57,36 +57,27 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
                 edizm.blockflag,
                 edizm.code
         );
-        return i;
     }
 
     @Override
     public int update(Edizm edizm) {
-        if (true) {
-            //Названия параметров должны совпадать с полями
-            // и обязательно должны быть геттеры на все поля
-            return namedParameterJdbcTemplate.update(""
-                            + " UPDATE edizm SET "
-                            + "   edizm_name = :name, "
-                            + "   edizm_notation = :notation, "
-                            + "   edizm_blockflag = :blockflag , "
-                            + "   edizm_code = :code "
-                            + " WHERE edizm_id = :id ",
-                    new BeanPropertySqlParameterSource(edizm));
+        //Названия параметров должны совпадать с полями
+        // и обязательно должны быть геттеры на все поля
+        return namedParameterJdbcTemplate.update(""
+                        + " UPDATE edizm SET "
+                        + "   edizm_name = :name, "
+                        + "   edizm_notation = :notation, "
+                        + "   edizm_blockflag = :blockflag , "
+                        + "   edizm_code = :code "
+                        + " WHERE edizm_id = :id ",
+                new BeanPropertySqlParameterSource(edizm));
+    }
+
+    public int save(Edizm edizm) {
+        if (edizm.id == null) {
+            return insert(edizm);
         } else {
-            return jdbcTemplate.update(""
-                            + " UPDATE edizm SET "
-                            + "   edizm_name = ?, "
-                            + "   edizm_notation = ?, "
-                            + "   edizm_blockflag = ?, "
-                            + "   edizm_code = ?"
-                            + " WHERE edizm_id = ? ",
-                    edizm.name,
-                    edizm.notation,
-                    edizm.blockflag,
-                    edizm.code,
-                    edizm.id
-            );
+            return update(edizm);
         }
     }
 
@@ -123,50 +114,29 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
 
     @Override
     public List<Edizm> findByName(String name) {
-        if (true) {
-            String sql = ""
-                    + " SELECT edizm_id, "
-                    + "        edizm_name, "
-                    + "        edizm_notation, "
-                    + "        edizm_blockflag, "
-                    + "        edizm_code "
-                    + " FROM   edizm "
-                    + " WHERE  edizm_name LIKE :edizm_name ";
+        String sql = ""
+                + " SELECT edizm_id, "
+                + "        edizm_name, "
+                + "        edizm_notation, "
+                + "        edizm_blockflag, "
+                + "        edizm_code "
+                + " FROM   edizm "
+                + " WHERE  edizm_name LIKE :edizm_name ";
 
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("edizm_name", "%" + name + "%");
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("edizm_name", "%" + name + "%");
 
-            return namedParameterJdbcTemplate.query(sql,
-                    mapSqlParameterSource,
-                    (rs, rowNum) ->
-                            new Edizm(
-                                    rs.getInt("edizm_id"),
-                                    rs.getString("edizm_name"),
-                                    rs.getString("edizm_notation"),
-                                    rs.getInt("edizm_blockflag"),
-                                    rs.getString("edizm_code")
-                            )
-            );
-        } else {
-            return jdbcTemplate.query(""
-                            + " SELECT edizm_id "
-                            + "        edizm_name, "
-                            + "        edizm_notation, "
-                            + "        edizm_blockflag, "
-                            + "        edizm_code "
-                            + " FROM   edizm "
-                            + " WHERE  edizm_name LIKE ? ",
-                    new Object[]{"%" + name + "%"},
-                    (rs, rowNum) ->
-                            new Edizm(
-                                    rs.getInt("edizm_id"),
-                                    rs.getString("edizm_name"),
-                                    rs.getString("edizm_notation"),
-                                    rs.getInt("edizm_blockflag"),
-                                    rs.getString("edizm_code")
-                            )
-            );
-        }
+        return namedParameterJdbcTemplate.query(sql,
+                mapSqlParameterSource,
+                (rs, rowNum) ->
+                        new Edizm(
+                                rs.getInt("edizm_id"),
+                                rs.getString("edizm_name"),
+                                rs.getString("edizm_notation"),
+                                rs.getInt("edizm_blockflag"),
+                                rs.getString("edizm_code")
+                        )
+        );
     }
 
     @Override
