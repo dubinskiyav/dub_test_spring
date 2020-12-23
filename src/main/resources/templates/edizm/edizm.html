@@ -201,6 +201,9 @@
 				}
 			}
 		});
+		$('#button_edit').click(function(){
+			alert('button_edit');
+		});
 	});
 	forSelectRecord = function(tableId,cb) {
 		var chkbox_all = $('#' + tableId + ' tbody input[type="checkbox"]'); 
@@ -279,7 +282,7 @@
 	</div>
 	<div class="PanelButton">
 		<button class="button_action" id="button_add"><img src="images/button_add.png" title="Добавить" onclick="menu_addClick()" ></button>
-		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить" onmouseout="elem_blur(this)"></button>
+		<button class="button_action" id="button_edit"><img src="images/button_edit.png" title="Изменить"></button>
 		<button class="button_action" id="button_del"><img src="images/button_delete.png" title="Удалить"></button>
 		<button class="button_action"><img src="images/button_refresh.png" title="Обновить" onclick="refreshMain()"></button>
 		<button class="button_action" id="button_filter"><img src="images/button_filter.png" title="Фильтр"></button>
@@ -311,7 +314,7 @@
 				<tbody>
 					<tr th:each="edizm,staterow: ${edizmlist}">
 						<td align="center"><input th:id="${edizm.id}" type="checkbox"/></td>				
-						<td th:text="${edizm.code}"></td>
+						<td><a th:href="@{'/edizm_upd/'+${edizm.id}}"><span th:text="${edizm.code}"></span></a> </td>
 						<td th:text="${edizm.notation}"></td>
 						<td th:text="${edizm.name}"></td>
 						<td th:text="${edizm.blockflag}"></td>

@@ -164,20 +164,23 @@ public class EdizmController {
         return "edizm/edizm_add";
     }
 
-    // Форматка добавленя
-    @RequestMapping(value = "/edizm_upd")
+    // Изменение
+    @RequestMapping(value = "/edizm_upd/{id}")
+    @Transactional(propagation = Propagation.REQUIRED)
     public String upd(
-            /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
-            @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "name_mask", required = false) String name_mask
+            @PathVariable("id") Integer id
     ) {
-        logger.info("upd - Start");
-        logger.info("upd - Finish");
+        logger.info("upd - Start edizm_id = " + id);
+        // Сляпаем из id
+        Edizm edizm = edizmRepositoryJdbc.findById(id);
+        model.addAttribute("edizm", edizm);
+        logger.info("upd - Finish with result = 1");
         return "edizm/edizm_add";
     }
 
-    // Одиночное удаление
+
+    // Одиночное удаление (не используется)
     @RequestMapping(value = "/edizm_del/{id}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String del(
