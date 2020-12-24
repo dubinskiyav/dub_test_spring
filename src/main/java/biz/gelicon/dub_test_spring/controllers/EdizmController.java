@@ -1,9 +1,7 @@
 package biz.gelicon.dub_test_spring.controllers;
 
-import biz.gelicon.dub_test_spring.DubTestSpringApplication;
 import biz.gelicon.dub_test_spring.model.Edizm;
 import biz.gelicon.dub_test_spring.repository.EdizmRepositoryJdbc;
-import biz.gelicon.dub_test_spring.utils.DatebaseConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +14,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller  /* Аннотация @Controller - говорит о том, что данный класс является контроллером.
                 Контроллеры в Spring обрабатывают HTTP запросы на определенный адреса. */
+@RequestMapping(value = "/edizm")  /* Данная аннотация говорит нам о том, что данный класс
+                                          обрабатывает HTTP GET запросы на адрес /edizm.
+                                          Иными словами, данный метод сработает, если кто-то
+                                          перейдет по адресу /edizm. */
 public class EdizmController {
 
     private static final Logger logger = LoggerFactory.getLogger(EdizmController.class);
@@ -41,11 +40,8 @@ public class EdizmController {
     @Autowired
     private ApplicationContext context;
 
-    @RequestMapping(value = "/edizm")  /* Данная аннотация говорит нам о том, что данный метод
-                                          обрабатывает HTTP GET запросы на адрес /edizm.
-                                          Иными словами, данный метод сработает, если кто-то
-                                          перейдет по адресу /edizm. */
-    // Главная форматка
+    // Главная форма
+    @RequestMapping(value = "index")
     public String edizm(
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
@@ -55,97 +51,28 @@ public class EdizmController {
         logger.info("edizm - Start");
         List<Edizm> edizmList = new ArrayList<>();
         int masterCount = 0;
-        if (true) {
-            // делаем через spring
-            if (page == null) { page = 0; }
-            if (name_mask == null) {
-                edizmList = edizmRepositoryJdbc.findAll();
-            } else {
-                edizmList = edizmRepositoryJdbc.findByName(name_mask);
-            }
-            masterCount = edizmList.size();
-            masterCount = edizmRepositoryJdbc.count();
-            String alias = context.getEnvironment().getProperty("spring.datasource.url");
-            model.addAttribute("alias", alias);
+        if (page == null) { page = 0; }
+        if (name_mask == null) {
+            edizmList = edizmRepositoryJdbc.findAll();
         } else {
-            // делаем по старинке
-            // Считаем глобальную переменную
-            //connection = DatebaseConn.connection;
-            // Перепроверим коннект
-            connection = DatebaseConn.datebaseConn.checkConnection(DatebaseConn.connection);
-
-            // Считаем единицы измерений
-            // Простой цикл
-            try {
-                PreparedStatement ps = null;
-                if (true) {
-                    ps = connection.prepareStatement(""
-                            + " SELECT E.edizm_id, "
-                            + "        E.edizm_name, "
-                            + "        E.edizm_notation, "
-                            + "        E.edizm_blockflag, "
-                            + "        E.edizm_code "
-                            + " FROM   edizm E"
-                            + " WHERE  E.edizm_id != ? "
-                            + " ORDER BY E.edizm_id ");
-                    ps.setInt(1, -123);
-                } else {
-                    // Много записей
-                    ps = connection.prepareStatement(""
-                            + " SELECT E.edizm_id, "
-                            + "        E.edizm_name, "
-                            + "        E.edizm_notation, "
-                            + "        E.edizm_blockflag, "
-                            + "        E.edizm_code "
-                            + " FROM   edizm E,  "
-                            + "        edizm E1, "
-                            + "        edizm E2,"
-                            + "        edizm E3,"
-                            + "        edizm E4,"
-                            + "        edizm E5  "
-                            + " WHERE  E.edizm_id != ? "
-                            + " ORDER BY E5.edizm_id,"
-                            + "          E4.edizm_id,"
-                            + "          E3.edizm_id, "
-                            + "          E2.edizm_id,"
-                            + "          E1.edizm_id,"
-                            + "          E.edizm_id ");
-                    ps.setInt(1, -123);
-                }
-                logger.info("executeQuery Start");
-                ResultSet rs = ps.executeQuery();
-                logger.info("executeQuery Finish");
-                while (rs.next()) {
-                    edizmList.add(new Edizm(
-                            rs.getInt("edizm_id"),
-                            rs.getString("edizm_name"),
-                            rs.getString("edizm_notation"),
-                            rs.getInt("edizm_blockflag"),
-                            rs.getString("edizm_code")
-                    ));
-                    masterCount++;
-                }
-                logger.info("next Finish");
-                ps.close();
-            } catch (Exception e) {
-                logger.error(e.getMessage());
-                throw new RuntimeException(e.getMessage());
-            }
-            model.addAttribute("alias", DatebaseConn.datebaseConn.alias);
+            edizmList = edizmRepositoryJdbc.findByName(name_mask);
         }
-        // Передадим в модель
+        masterCount = edizmList.size();
+        masterCount = edizmRepositoryJdbc.count();
+        String alias = context.getEnvironment().getProperty("spring.datasource.url");
+        model.addAttribute("alias", alias);
         model.addAttribute("edizmlist", edizmList);
         model.addAttribute("masterCount", masterCount);
 
         logger.info("edizmController - Finish");
-        return "edizm/edizm"; /* метод контроллера должен вернуть имя представления.
+        return "edizm/index"; /* метод контроллера должен вернуть имя представления.
                            Далее Spring будет искать html файл, с таким именем,
                            который и вернет в качестве ответа на HTTP запрос.
                            В данном случае возьмет edizm_null.html а вернет как edizm.html */
     }
 
     // Форма добавленя
-    @RequestMapping(value = "/edizm_add")
+    @RequestMapping(value = "add")
     public String add(
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
@@ -158,11 +85,11 @@ public class EdizmController {
         edizm.setBlockflagB(false);
         model.addAttribute("edizm", edizm);
         logger.info("add - Finish");
-        return "edizm/edizm_add";
+        return "edizm/form";
     }
 
     // Изменение
-    @RequestMapping(value = "/edizm_upd/{id}")
+    @RequestMapping(value = "upd/{id}")
     @Transactional(propagation = Propagation.REQUIRED)
     public String upd(
             Model model,
@@ -173,12 +100,12 @@ public class EdizmController {
         Edizm edizm = edizmRepositoryJdbc.findById(id);
         model.addAttribute("edizm", edizm);
         logger.info("upd - Finish with result = 1");
-        return "edizm/edizm_add";
+        return "edizm/form";
     }
 
 
     // Множественное удаление
-    @RequestMapping(value = "/edizm_del_ids/{ids}", method = RequestMethod.POST)
+    @RequestMapping(value = "del_ids/{ids}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String delIds(
             Model model,
@@ -190,11 +117,11 @@ public class EdizmController {
             Integer i = edizmRepositoryJdbc.delete(id);
         }
         logger.info("Deleted");
-        return "redirect:/edizm";
+        return "redirect:/edizm/index";
     }
 
     // Выполнение добавления или изменения
-    @RequestMapping(value = "/postedizm", method = RequestMethod.POST)
+    @RequestMapping(value = "post", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String postEdizm(
             @Valid @ModelAttribute Edizm edizm,
@@ -202,26 +129,13 @@ public class EdizmController {
             Model model
     ) {
         logger.info("Saving... " + edizm.toString());
-        String url = "/edizm_add";
-        if (edizm.id != null) {url = "/edizm_upd";}
         try {
             int i = edizmRepositoryJdbc.save(edizm);
         } catch (DataAccessException e) {
-            return url;
+            return "edizm/form";
         }
-        return "redirect:/edizm";
+        return "redirect:/edizm/index";
     }
 
-    // Отказ от добавления
-    @RequestMapping(value = "/edizmcancel")
-    @Transactional(propagation = Propagation.REQUIRED)
-    public String cancelEdizm(
-            @Valid @ModelAttribute Edizm edizm,
-            BindingResult result,
-            Model model
-    ) {
-        logger.info("Cancel... " + edizm.toString());
-        return "redirect:/edizm";
-    }
 
 }

@@ -49,7 +49,7 @@
   </script>
  </head>
  <body>
-	<form th:object="${edizm}" th:action="@{/postedizm}" method="post">
+	<form th:object="${edizm}" th:action="@{post}" method="post">
 		<h1>Добавить единицу измерения</h1>
 		<input type="hidden" th:field="*{id}">
 		<div class="field">Наименование*: <input type="text" th:field="*{name}" required placeholder="Введите наименование"></div>
@@ -58,7 +58,6 @@
 		<div class="field">Код*: <input type="text" th:field="*{code}" required placeholder="Введите код"></div>
 		<div class="PanelButton">
 			<button type="submit" class="button_action">Согласен</button>
-			<button type="submit1" class="button_action" formaction = "/edizmcancel">Отказ</button>
 		</div>
 	</form>
  </body>
