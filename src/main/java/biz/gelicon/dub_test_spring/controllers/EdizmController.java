@@ -137,13 +137,11 @@ public class EdizmController {
         try {
             edizmRepositoryJdbc.save(edizm);
         } catch (DataAccessException e) {
-            result.rejectValue("id", "", DatebaseUtils.makeErrorMessage(e));
             if (idSaved == null) {
                 // Это было добавление - обнулим id
                 edizm.setId(null);
-                // и передадим
-                model.addAttribute("edizm", edizm);
             }
+            result.rejectValue("id", "", DatebaseUtils.makeErrorMessage(e));
             return "edizm/form";
         }
         return "redirect:/edizm/index";
