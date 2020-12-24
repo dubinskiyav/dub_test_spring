@@ -40,6 +40,12 @@
 		border-radius: 8px;
 		border: 1px solid #cecece;
 	}
+	.has-error {
+        position: fixed;
+        color: red;
+        left: 200px;
+        padding: 5px 0px;
+    }
   </style> 
   <script>
 	function closeWindow() {
@@ -59,6 +65,7 @@
 		<div class="PanelButton">
 			<button type="submit" class="button_action">Согласен</button>
 		</div>
+		<div class="has-error" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></div>
 	</form>
  </body>
 </html>

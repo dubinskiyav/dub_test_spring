@@ -2,6 +2,7 @@ package biz.gelicon.dub_test_spring.controllers;
 
 import biz.gelicon.dub_test_spring.model.Edizm;
 import biz.gelicon.dub_test_spring.repository.EdizmRepositoryJdbc;
+import biz.gelicon.dub_test_spring.utils.DatebaseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,9 +132,18 @@ public class EdizmController {
             Model model
     ) {
         logger.info("Saving... " + edizm.toString());
+        // Запомним что это удаление или добавление
+        Integer idSaved = edizm.getId();
         try {
-            int i = edizmRepositoryJdbc.save(edizm);
+            edizmRepositoryJdbc.save(edizm);
         } catch (DataAccessException e) {
+            result.rejectValue("id", "", DatebaseUtils.makeErrorMessage(e));
+            if (idSaved == null) {
+                // Это было добавление - обнулим id
+                edizm.setId(null);
+                // и передадим
+                model.addAttribute("edizm", edizm);
+            }
             return "edizm/form";
         }
         return "redirect:/edizm/index";

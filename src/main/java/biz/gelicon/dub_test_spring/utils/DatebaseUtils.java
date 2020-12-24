@@ -1,19 +1,43 @@
 package biz.gelicon.dub_test_spring.utils;
 
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+// https://tproger.ru/translations/useful-postgresql-commands/
 
 // Общие методы работы с базой данных
 public class DatebaseUtils {
 
     public static String dbType;
 
-//    @Autowired
-//    private ApplicationContext context;
+    // Формирует текст ошибки в читаемом виде
+    public static String makeErrorMessage(Exception e) {
+        if (e == null) {return "Ошибка";}
+        String s = e.getMessage();
+        if (e instanceof DuplicateKeyException) {
+            s = "Нарушение уникальности";
+        } else if (e instanceof DataIntegrityViolationException) {
+            s = "Нарушение целостности";
+        }
+        return s;
+    }
+
+    // Формирует текст ошибки как он вернулся из базы
+    public static String makeErrorMessageFull(Exception e) {
+        if (e == null) {return "Ошибка";}
+        return e.getMessage();
+    }
+
 
     // Возвращает следующее значение генератора
     public Integer getSequenceNextValue(
@@ -63,7 +87,9 @@ public class DatebaseUtils {
     }
 
     public static void setDbType(JdbcTemplate jdbcTemplate) {
-        if (jdbcTemplate == null) { return; }
+        if (jdbcTemplate == null || jdbcTemplate.getDataSource() == null) {
+            return;
+        }
         Connection connection = null;
         try {
             connection = jdbcTemplate.getDataSource().getConnection();
@@ -79,5 +105,129 @@ public class DatebaseUtils {
         if (dbDriverName != null && dbDriverName.contains("postgresql")) {
             dbType = "postgresql";
         }
+    }
+
+    public static Connection getJdbcTemplateConnection(JdbcTemplate jdbcTemplate){
+        if (jdbcTemplate == null || jdbcTemplate.getDataSource() == null) {
+            throw new RuntimeException("Нет коннекта");
+        }
+        Connection connection = null;
+        try {
+            connection = jdbcTemplate.getDataSource().getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (connection == null) {
+            throw new RuntimeException("Нет коннекта");
+        }
+        return connection;
+    }
+
+    // Список внешних ключей таблицы
+    public static List<String> getForeignKeyTable(
+            String tableName,
+            JdbcTemplate jdbcTemplate
+    ) {
+        Connection connection = getJdbcTemplateConnection(jdbcTemplate);
+        String sqlText = ""
+                + " SELECT TC.table_name, "
+                + "        KCU.column_name, "
+                + "        CCU.table_name, "
+                + "        CCU.column_name, "
+                + "        TC.constraint_name "
+                + " FROM   information_schema.table_constraints TC, "
+                + "        information_schema.key_column_usage KCU, "
+                + "        information_schema.constraint_column_usage CCU "
+                + " WHERE  TC.table_name = :table_name "
+                + "   AND  TC.constraint_type = 'FOREIGN KEY' "
+                + "   AND  KCU.constraint_name = TC.constraint_name  "
+                + "   AND  KCU.table_schema = TC.table_schema "
+                + "   AND  CCU.constraint_name = TC.constraint_name  "
+                + "   AND  CCU.table_schema = TC.table_schema";
+        List<String> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(""
+                    + " SELECT TC.table_name, "
+                    + "        KCU.column_name, "
+                    + "        CCU.table_name master_table_name, "
+                    + "        CCU.column_name master_column_name, "
+                    + "        TC.constraint_name "
+                    + " FROM   information_schema.table_constraints TC, "
+                    + "        information_schema.key_column_usage KCU, "
+                    + "        information_schema.constraint_column_usage CCU "
+                    + " WHERE  TC.table_name = ? "
+                    + "   AND  TC.constraint_type = 'FOREIGN KEY' "
+                    + "   AND  KCU.constraint_name = TC.constraint_name  "
+                    + "   AND  KCU.table_schema = TC.table_schema "
+                    + "   AND  CCU.constraint_name = TC.constraint_name  "
+                    + "   AND  CCU.table_schema = TC.table_schema ");
+            ps.setString(1, tableName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                list.add(rs.getString("table_name")
+                        + "," + rs.getString("column_name")
+                        + "," + rs.getString("master_table_name")
+                        + "," + rs.getString("master_column_name")
+                        + "," + rs.getString("constraint_name"));
+            }
+            ps.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return list;
+    }
+
+    // Список внешних ключей таблицы на таблицу
+    public static List<String> getForeignKeyMasterTable(
+            String masterTableName,
+            JdbcTemplate jdbcTemplate
+    ) {
+        Connection connection = getJdbcTemplateConnection(jdbcTemplate);
+        String sqlText = ""
+                + " SELECT TC.table_name, "
+                + "        KCU.column_name, "
+                + "        CCU.table_name, "
+                + "        CCU.column_name, "
+                + "        TC.constraint_name "
+                + " FROM   information_schema.table_constraints TC, "
+                + "        information_schema.key_column_usage KCU, "
+                + "        information_schema.constraint_column_usage CCU "
+                + " WHERE  TC.table_name = :table_name "
+                + "   AND  TC.constraint_type = 'FOREIGN KEY' "
+                + "   AND  KCU.constraint_name = TC.constraint_name  "
+                + "   AND  KCU.table_schema = TC.table_schema "
+                + "   AND  CCU.constraint_name = TC.constraint_name  "
+                + "   AND  CCU.table_schema = TC.table_schema";
+        List<String> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(""
+                    + " SELECT TC.table_name, "
+                    + "        KCU.column_name, "
+                    + "        CCU.table_name master_table_name, "
+                    + "        CCU.column_name master_column_name, "
+                    + "        TC.constraint_name "
+                    + " FROM   information_schema.table_constraints TC, "
+                    + "        information_schema.key_column_usage KCU, "
+                    + "        information_schema.constraint_column_usage CCU "
+                    + " WHERE  CCU.table_name = ? "
+                    + "   AND  TC.constraint_type = 'FOREIGN KEY' "
+                    + "   AND  KCU.constraint_name = TC.constraint_name  "
+                    + "   AND  KCU.table_schema = TC.table_schema "
+                    + "   AND  CCU.constraint_name = TC.constraint_name  "
+                    + "   AND  CCU.table_schema = TC.table_schema ");
+            ps.setString(1, masterTableName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                list.add(rs.getString("table_name")
+                        + "," + rs.getString("column_name")
+                        + "," + rs.getString("master_table_name")
+                        + "," + rs.getString("master_column_name")
+                        + "," + rs.getString("constraint_name"));
+            }
+            ps.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return list;
     }
 }
