@@ -193,10 +193,14 @@
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
+						success: function(data, textStatus) {
+							alert('Удалено');
+						},
+						error: function (error) {
+							alert('Ошибка');
+						}
 					}); 	
 				}
-				// Перегрузим всю страницу
-				location.reload(true); // // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 			}
 		});
 		$('#button_edit').click(function(){
@@ -233,6 +237,7 @@
 	function refreshMain() {
 		// Перегрузим всю страницу
 		window.location.reload();
+		// location.reload(true); // // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 	};	
 	function menu_addClick() {
 		// Перейдем на страницу добавления

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
 import java.sql.Connection;
@@ -106,8 +108,9 @@ public class EdizmController {
 
     // Множественное удаление
     @RequestMapping(value = "del_ids/{ids}", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK) // todo Почему так?
     @Transactional(propagation = Propagation.REQUIRED)
-    public String delIds(
+    public void delIds(
             Model model,
             @PathVariable("ids") String ids
     ) {
@@ -117,7 +120,6 @@ public class EdizmController {
             Integer i = edizmRepositoryJdbc.delete(id);
         }
         logger.info("Deleted");
-        return "redirect:/edizm/index";
     }
 
     // Выполнение добавления или изменения
