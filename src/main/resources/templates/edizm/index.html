@@ -316,7 +316,7 @@
 						<td th:text="${edizm.notation}"></td>
 						<td th:text="${edizm.name}"></td>
 						<td th:text="${edizm.blockflag}"></td>
-						<td><input type="checkbox" th:checked="${edizm.BlockflagB}" disabled/></td>				
+						<td><div th:if="${edizm.blockflagB}">&check;</div></td>						
 					</tr>
 				</tbody>
 			</table>
