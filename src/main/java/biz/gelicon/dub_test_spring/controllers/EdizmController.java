@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +57,7 @@ public class EdizmController {
         int masterCount = 0;
         if (true) {
             // делаем через spring
-            if(page==null) page=0;
+            if (page == null) { page = 0; }
             if (name_mask == null) {
                 edizmList = edizmRepositoryJdbc.findAll();
             } else {
@@ -176,19 +177,6 @@ public class EdizmController {
     }
 
 
-    // Одиночное удаление (не используется)
-    @RequestMapping(value = "/edizm_del/{id}", method = RequestMethod.POST)
-    @Transactional(propagation = Propagation.REQUIRED)
-    public String del(
-            Model model,
-            @PathVariable("id") Integer id
-    ) {
-        logger.info("del - Start edizm_id = " + id);
-        Integer i = edizmRepositoryJdbc.delete(id);
-        logger.info("del - Finish with result = " + i);
-        return "redirect:/edizm";
-    }
-
     // Множественное удаление
     @RequestMapping(value = "/edizm_del_ids/{ids}", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
@@ -214,8 +202,13 @@ public class EdizmController {
             Model model
     ) {
         logger.info("Saving... " + edizm.toString());
-        int i = edizmRepositoryJdbc.save(edizm);
-        logger.info(edizm.toString() + " has saved");
+        String url = "/edizm_add";
+        if (edizm.id != null) {url = "/edizm_upd";}
+        try {
+            int i = edizmRepositoryJdbc.save(edizm);
+        } catch (DataAccessException e) {
+            return url;
+        }
         return "redirect:/edizm";
     }
 

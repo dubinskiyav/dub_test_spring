@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +45,8 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
         // Как то надо получить значение edizm_id
         DatebaseUtils datebaseUtils = new DatebaseUtils();
         edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen", jdbcTemplate);
-        return jdbcTemplate.update(""
+        Integer result = -1;
+        result = jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
                         + "   edizm_id, "
                         + "   edizm_name, "
@@ -57,6 +59,7 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
                 edizm.blockflag,
                 edizm.code
         );
+        return result;
     }
 
     @Override
