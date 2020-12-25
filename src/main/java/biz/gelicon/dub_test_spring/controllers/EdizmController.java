@@ -3,6 +3,7 @@ package biz.gelicon.dub_test_spring.controllers;
 import biz.gelicon.dub_test_spring.model.Edizm;
 import biz.gelicon.dub_test_spring.repository.EdizmRepositoryJdbc;
 import biz.gelicon.dub_test_spring.utils.DatebaseUtils;
+import biz.gelicon.dub_test_spring.utils.ErrorJ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
@@ -111,21 +113,26 @@ public class EdizmController {
     @RequestMapping(value = "del_ids/{ids}", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK) // todo Почему так?
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delIds(
+    @ResponseBody // Возвращает в ответ тело
+    public ErrorJ delIds(
             @PathVariable("ids") String ids,
             Model model
     ) {
         logger.info("delele (" + ids + ")");
+        ErrorJ errorJ = new ErrorJ();
         for (String s : ids.replaceAll("\\s+", "").split(",")) {
             Integer id = Integer.parseInt(s);
             try {
                 Integer i = edizmRepositoryJdbc.delete(id);
             } catch (Exception e) {
-                model.addAttribute("deleteerror","Нельзя удалить");
-                return;
+                errorJ.setCode(516);
+                errorJ.setMessage("Ошибка при удалении");
+                errorJ.setExceptionText(e.getMessage());
+                return errorJ;
             }
         }
         logger.info("Deleted");
+        return errorJ;
     }
 
     // Выполнение добавления или изменения

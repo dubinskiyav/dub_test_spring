@@ -193,10 +193,13 @@
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
-						success: function(data, textStatus) {
+						success: function(jqXHR, textStatus) {
+							alert('data' + data);
+							alert('textStatus' + textStatus);
+							alert(jqXHR.message);
 							location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 						},
-						error: function (error) {
+						error: function (error, jqXHR) {
 							alert(error.responseText);
 						}
 					}); 	
