@@ -194,10 +194,9 @@
 						type:'POST',
 						url : delete_url ,
 						success: function(data, textStatus, jqXHR) {
-						alert('Ошибка');
-							alert('data' + data);
-							alert('textStatus' + textStatus);
-							alert(jqXHR.message);
+							alert(data.message);
+							alert(data.code);
+							alert(data.exceptionText);
 							location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 						},
 						error: function (error, jqXHR) {
