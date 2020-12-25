@@ -43,7 +43,7 @@
 	.has-error {
         position: fixed;
         color: red;
-        left: 200px;
+        left: 250px;
         padding: 5px 0px;
     }
   </style> 
@@ -59,9 +59,12 @@
 		<h1>Добавить единицу измерения</h1>
 		<input type="hidden" th:field="*{id}">
 		<div class="field">Наименование*: <input type="text" th:field="*{name}" placeholder="Введите наименование"></div>
+        <div class="has-error" th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></div>
 		<div class="field">Обозначение*: <input type="text" th:field="*{notation}" placeholder="Введите обозначение"></div>
+        <div class="has-error" th:if="${#fields.hasErrors('notation')}" th:text="${#fields.errors('notation')}"></div>
 		<div class="field">Невозможность изменения*: <input type="checkbox" th:checked="*{BlockflagB}" name="blockflagB"></p></div>
 		<div class="field">Код*: <input type="text" th:field="*{code}" placeholder="Введите код"></div>
+        <div class="has-error" th:if="${#fields.hasErrors('code')}" th:text="${#fields.errors('code')}"></div>
 		<div class="PanelButton">
 			<button type="submit" class="button_action">Согласен</button>
 		</div>

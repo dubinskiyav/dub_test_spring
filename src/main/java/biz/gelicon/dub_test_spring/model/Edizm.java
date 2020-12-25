@@ -12,13 +12,13 @@ public class Edizm {
     public String name;
 
     @NotEmpty(message="Обозначение не может быть пустым")
-    @Size(max=15, message = "Имя должно содержать не более {1} символов")
+    @Size(max=15, message = "Обозначение должно содержать не более {1} символов")
     public String notation;
 
     public Integer blockflag;
 
     @NotEmpty(message="Код не может быть пустым")
-    @Size(max=20, message = "Имя должно содержать не более {1} символов")
+    @Size(max=20, message = "Код должен содержать не более {1} символов")
     public String code;
 
     public Edizm(

@@ -79,7 +79,6 @@ public class EdizmController {
     // Форма добавленя
     @RequestMapping(value = "add")
     public String add(
-            @Valid @ModelAttribute("edizm")
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
             @RequestParam(value = "page", required = false) Integer page,
@@ -98,7 +97,6 @@ public class EdizmController {
     @RequestMapping(value = "upd/{id}")
     @Transactional(propagation = Propagation.REQUIRED)
     public String upd(
-            @Valid @ModelAttribute("edizm")
             Model model,
             @PathVariable("id") Integer id
     ) {
@@ -141,11 +139,21 @@ public class EdizmController {
     @RequestMapping(value = "post", method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public String postEdizm(
-            @Valid @ModelAttribute Edizm edizm,
-            BindingResult result,
+            @Valid @ModelAttribute("edizm") Edizm edizm, // Говорим о том, что надо выполнить проверку по модели
+            BindingResult result, // и результат закинуть во второй аргумент, то есть сюда
             Model model
     ) {
         logger.info("Saving... " + edizm.toString());
+        // Сначала сами проверим
+        if(edizm.getCode().toLowerCase().equals("код")) {
+            result.rejectValue("code", "", "Поле 'Код' не может иметь значение '" + edizm.getCode() + "'");
+        }
+        if(result.hasErrors()) { // Если есть ошибки валидации полей - возвращаемся
+            logger.error(result.getAllErrors().toString());
+            return "edizm/form"; // result попадает в форму сам, об этом заботится не надо
+            // в форме так
+            // <div class="field">Обозначение*: <input type="text" th:field="*{notation}" placeholder="Введите обозначение"></div>
+        }
         // Запомним что это удаление или добавление
         Integer idSaved = edizm.getId();
         try {
