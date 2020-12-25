@@ -126,7 +126,7 @@ public class EdizmController {
                 Integer i = edizmRepositoryJdbc.delete(id);
             } catch (Exception e) {
                 errorJ.setCode(516);
-                errorJ.setMessage("Ошибка при удалении");
+                errorJ.setMessage(DatebaseUtils.makeErrorMessage(e));
                 errorJ.setExceptionText(e.getMessage());
                 return errorJ;
             }

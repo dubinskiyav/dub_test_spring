@@ -27,7 +27,7 @@ public class DatebaseUtils {
         if (e instanceof DuplicateKeyException) {
             s = "Нарушение уникальности";
         } else if (e instanceof DataIntegrityViolationException) {
-            s = "Нарушение целостности";
+            s = "Нарушение ссылочной целостности. Возможно, на запись есть ссылки.";
         }
         return s;
     }

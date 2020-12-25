@@ -170,6 +170,9 @@
 		border: solid LightGrey;
 		border-width: 1px 0px;
 	}
+	.error_message {
+		float: left;
+	}
   </style> 
   <script   /* Подключаем JQuery */
 	type="text/javascript"
@@ -195,11 +198,15 @@
 						type:'POST',
 						url : delete_url ,
 						success: function(data, textStatus, jqXHR) {
-							alert(data.message);
-							alert(data.code);
-							alert(data.exceptionText);
-							location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
-							console.log("textStatus=", textStatus);
+							if (data.code == 200) { // все отличнно
+								location.reload(true); 
+								set_error_message('Запись удалена','');
+							} else {
+								set_error_message('Ошибка удаления',data.message);
+								//alert(data.code);
+								//alert(data.exceptionText);
+								console.log("textStatus=", textStatus);
+							}
 						},
 						error: function (error, jqXHR) {
 							alert(error.responseText);
@@ -230,12 +237,18 @@
 	function db_message_boxText(msg) {
 		document.getElementById('db_message_box').textContent = msg;
 	};
+	// Текст слева под таблицей
+	function set_error_message(msg,msg_add) {
+		document.getElementById('error_message').textContent = msg;
+		document.getElementById('error_message_add').textContent = msg_add;
+	};
 	// После загрузки окна
 	window.onload = function(){
 		db_message_boxText(alias); // установить алиас снизу справа
 		var current_datetime = new Date();
 		var s = current_datetime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'});
 		footer_message_boxText('Обновлено ' + s);
+		set_error_message(' 1 ', ' 2 ' );
 	};
   </script>
   <script>
@@ -303,6 +316,7 @@
 					<div class="table_header_item_left">
 						СПИСОК ЕДИНИЦ ИЗМЕРЕНИЯ
 					</div>
+					
 				</div>
 				<div class="table_header_right_block">
 					<div class="table_header_item_right" id="master_table_record_count">
@@ -330,7 +344,8 @@
 				</tbody>
 			</table>
 			<div class="main_table_footer">
-				<span th:text="'Выбрано ' + ${masterCount} + ' записей'">Выбрано NNN записей</span>
+				<div class="error_message" id="error_message">Панель сообщений</div>
+				<div class="error_message" id="error_message_add">Панель допольнительных сообщений</div>
 			</div>
 		</div>
 	</div>
@@ -342,8 +357,6 @@
 			База
 		</div>
 	</div>
-	Ошибка	
-	<p th:text="'deleteerror = ' + ${deleteerror}" />
 	<!--
 				th:text="${masterCount}"
 	<p th:text="'driverclassname = ' + ${driverclassname}" />
