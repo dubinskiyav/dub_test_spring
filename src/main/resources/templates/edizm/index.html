@@ -172,6 +172,8 @@
 	}
 	.error_message {
 		float: left;
+		padding: 0px 0px 0px 10px
+        color: red;
 	}
   </style> 
   <script   /* Подключаем JQuery */
@@ -202,7 +204,7 @@
 								location.reload(true); 
 								set_error_message('Запись удалена','');
 							} else {
-								set_error_message('Ошибка удаления',data.message);
+								set_error_message('Ошибка удаления',data.message,data.exceptionText);
 								//alert(data.code);
 								//alert(data.exceptionText);
 								console.log("textStatus=", textStatus);
@@ -238,9 +240,11 @@
 		document.getElementById('db_message_box').textContent = msg;
 	};
 	// Текст слева под таблицей
-	function set_error_message(msg,msg_add) {
+	function set_error_message(msg,msg_add,title) {
+					 debugger; 
 		document.getElementById('error_message').textContent = msg;
 		document.getElementById('error_message_add').textContent = msg_add;
+		document.getElementById('error_message_add').title = title;
 	};
 	// После загрузки окна
 	window.onload = function(){
@@ -248,7 +252,6 @@
 		var current_datetime = new Date();
 		var s = current_datetime.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'});
 		footer_message_boxText('Обновлено ' + s);
-		set_error_message(' 1 ', ' 2 ' );
 	};
   </script>
   <script>
@@ -344,8 +347,8 @@
 				</tbody>
 			</table>
 			<div class="main_table_footer">
-				<div class="error_message" id="error_message">Панель сообщений</div>
-				<div class="error_message" id="error_message_add">Панель допольнительных сообщений</div>
+				<div class="error_message" id="error_message"></div>
+				<div class="error_message" id="error_message_add"></div>
 			</div>
 		</div>
 	</div>

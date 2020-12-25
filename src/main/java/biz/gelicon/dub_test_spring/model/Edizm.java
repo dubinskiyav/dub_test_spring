@@ -1,12 +1,24 @@
 package biz.gelicon.dub_test_spring.model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 // Обязательно public иначе в шаблоне не увидит!!!! и поля тоже public !!!!
 public class Edizm {
 
     public Integer id;
+
+    @Size(max=50, message = "Имя должно содержать не более {1} символов")
     public String name;
+
+    @NotEmpty(message="Обозначение не может быть пустым")
+    @Size(max=15, message = "Имя должно содержать не более {1} символов")
     public String notation;
+
     public Integer blockflag;
+
+    @NotEmpty(message="Код не может быть пустым")
+    @Size(max=20, message = "Имя должно содержать не более {1} символов")
     public String code;
 
     public Edizm(

@@ -79,6 +79,7 @@ public class EdizmController {
     // Форма добавленя
     @RequestMapping(value = "add")
     public String add(
+            @Valid @ModelAttribute("edizm")
             /* пары ключ-значение для передачи данных из Java кода в html страницы */
             Model model,
             @RequestParam(value = "page", required = false) Integer page,
@@ -97,6 +98,7 @@ public class EdizmController {
     @RequestMapping(value = "upd/{id}")
     @Transactional(propagation = Propagation.REQUIRED)
     public String upd(
+            @Valid @ModelAttribute("edizm")
             Model model,
             @PathVariable("id") Integer id
     ) {
