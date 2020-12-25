@@ -112,13 +112,18 @@ public class EdizmController {
     @ResponseStatus(value = HttpStatus.OK) // todo Почему так?
     @Transactional(propagation = Propagation.REQUIRED)
     public void delIds(
-            Model model,
-            @PathVariable("ids") String ids
+            @PathVariable("ids") String ids,
+            Model model
     ) {
         logger.info("delele (" + ids + ")");
         for (String s : ids.replaceAll("\\s+", "").split(",")) {
             Integer id = Integer.parseInt(s);
-            Integer i = edizmRepositoryJdbc.delete(id);
+            try {
+                Integer i = edizmRepositoryJdbc.delete(id);
+            } catch (Exception e) {
+                model.addAttribute("deleteerror","Нельзя удалить");
+                return;
+            }
         }
         logger.info("Deleted");
     }
@@ -136,12 +141,16 @@ public class EdizmController {
         Integer idSaved = edizm.getId();
         try {
             edizmRepositoryJdbc.save(edizm);
-        } catch (DataAccessException e) {
+        } catch (Exception e) {
             if (idSaved == null) {
                 // Это было добавление - обнулим id
                 edizm.setId(null);
             }
-            result.rejectValue("id", "", DatebaseUtils.makeErrorMessage(e));
+            if (e instanceof DataAccessException) { // Ошибка добавления в БД
+                result.rejectValue("id", "", DatebaseUtils.makeErrorMessage(e));
+            } else {
+                result.rejectValue("id", "", e.getMessage());
+            }
             return "edizm/form";
         }
         return "redirect:/edizm/index";

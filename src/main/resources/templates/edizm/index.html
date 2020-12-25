@@ -197,7 +197,6 @@
 							location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
 						},
 						error: function (error) {
-							alert(error.status);
 							alert(error.responseText);
 						}
 					}); 	
@@ -338,6 +337,8 @@
 			База
 		</div>
 	</div>
+	Ошибка	
+	<p th:text="'deleteerror = ' + ${deleteerror}" />
 	<!--
 				th:text="${masterCount}"
 	<p th:text="'driverclassname = ' + ${driverclassname}" />
