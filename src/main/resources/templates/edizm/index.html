@@ -190,6 +190,7 @@
 					var idsString = ids.join(", ");
 					// Перейдем на страницу удаления
 					var delete_url = 'del_ids/' + idsString;
+					 debugger; 
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
@@ -198,6 +199,7 @@
 							alert(data.code);
 							alert(data.exceptionText);
 							location.reload(true); // the value “true” ensures that the current page is fully loaded ignoring the “cache”.
+							console.log("textStatus=", textStatus);
 						},
 						error: function (error, jqXHR) {
 							alert(error.responseText);
