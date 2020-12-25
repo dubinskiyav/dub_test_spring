@@ -193,7 +193,8 @@
 					$.ajax({
 						type:'POST',
 						url : delete_url ,
-						success: function(jqXHR, textStatus) {
+						success: function(data, textStatus, jqXHR) {
+						alert('Ошибка');
 							alert('data' + data);
 							alert('textStatus' + textStatus);
 							alert(jqXHR.message);

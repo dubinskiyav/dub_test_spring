@@ -110,13 +110,13 @@ public class EdizmController {
 
 
     // Множественное удаление
-    @RequestMapping(value = "del_ids/{ids}", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK) // todo Почему так?
+    @RequestMapping(value = "del_ids/{ids}",
+            method = RequestMethod.POST,
+            produces = "application/json")
     @Transactional(propagation = Propagation.REQUIRED)
     @ResponseBody // Возвращает в ответ тело
     public ErrorJ delIds(
-            @PathVariable("ids") String ids,
-            Model model
+            @PathVariable("ids") String ids
     ) {
         logger.info("delele (" + ids + ")");
         ErrorJ errorJ = new ErrorJ();
