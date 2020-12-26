@@ -1,6 +1,7 @@
 package biz.gelicon.dub_test_spring.controllers;
 
 import biz.gelicon.dub_test_spring.model.Edizm;
+import biz.gelicon.dub_test_spring.model.EdizmValidator;
 import biz.gelicon.dub_test_spring.repository.EdizmRepositoryJdbc;
 import biz.gelicon.dub_test_spring.utils.DatebaseUtils;
 import biz.gelicon.dub_test_spring.utils.ErrorJ;
@@ -9,19 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
 import java.sql.Connection;
@@ -44,6 +45,14 @@ public class EdizmController {
 
     @Autowired
     private ApplicationContext context;
+
+    @Autowired
+    private EdizmValidator validator; // Валидатор для дополнительной проверки полей
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) { // todo Непонятно что это
+        binder.setValidator(validator);
+    }
 
     // Главная форма
     @RequestMapping(value = "index")
@@ -145,9 +154,15 @@ public class EdizmController {
     ) {
         logger.info("Saving... " + edizm.toString());
         // Сначала сами проверим
+        // Это можно перенести в вализатор для Edizm
+        // Здесь оставил только для примера
         if(edizm.getCode().toLowerCase().equals("код")) {
             result.rejectValue("code", "", "Поле 'Код' не может иметь значение '" + edizm.getCode() + "'");
         }
+        // Проверим с помощью валидатора
+        //validator.validate(edizm, result); // Это не надо так как сделали initBinder
+                                              // И наш валидатор вызовется сам
+        // Проверим на наличие ошибок
         if(result.hasErrors()) { // Если есть ошибки валидации полей - возвращаемся
             logger.error(result.getAllErrors().toString());
             return "edizm/form"; // result попадает в форму сам, об этом заботится не надо
