@@ -1,5 +1,6 @@
-package biz.gelicon.dub_test_spring.model;
+package biz.gelicon.dub_test_spring.validators;
 
+import biz.gelicon.dub_test_spring.model.Edizm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

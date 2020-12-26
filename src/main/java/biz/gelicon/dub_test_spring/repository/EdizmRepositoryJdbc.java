@@ -44,7 +44,7 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
         logger.info("Saving...{}", edizm.toString());
         // Как то надо получить значение edizm_id
         DatebaseUtils datebaseUtils = new DatebaseUtils();
-        edizm.id = datebaseUtils.getSequenceNextValue("edizm_id_gen", jdbcTemplate);
+        edizm.setId(datebaseUtils.getSequenceNextValue("edizm_id_gen", jdbcTemplate));
         Integer result = -1;
         result = jdbcTemplate.update(""
                         + " INSERT INTO edizm ("
@@ -53,11 +53,11 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
                         + "   edizm_notation, "
                         + "   edizm_blockflag, "
                         + "   edizm_code) VALUES(?,?,?,?,?)",
-                edizm.id,
-                edizm.name,
-                edizm.notation,
-                edizm.blockflag,
-                edizm.code
+                edizm.getId(),
+                edizm.getName(),
+                edizm.getNotation(),
+                edizm.getBlockflag(),
+                edizm.getCode()
         );
         return result;
     }
@@ -77,7 +77,7 @@ public class EdizmRepositoryJdbc implements EdizmRepository {
     }
 
     public int save(Edizm edizm) {
-        if (edizm.id == null) {
+        if (edizm.getId() == null) {
             return insert(edizm);
         } else {
             return update(edizm);

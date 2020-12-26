@@ -1,7 +1,7 @@
 package biz.gelicon.dub_test_spring.controllers;
 
 import biz.gelicon.dub_test_spring.model.Edizm;
-import biz.gelicon.dub_test_spring.model.EdizmValidator;
+import biz.gelicon.dub_test_spring.validators.EdizmValidator;
 import biz.gelicon.dub_test_spring.repository.EdizmRepositoryJdbc;
 import biz.gelicon.dub_test_spring.utils.DatebaseUtils;
 import biz.gelicon.dub_test_spring.utils.ErrorJ;

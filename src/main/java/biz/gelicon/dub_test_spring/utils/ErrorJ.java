@@ -1,5 +1,6 @@
 package biz.gelicon.dub_test_spring.utils;
 
+// Вспомогательный класс для пуляния ошибки в форму
 public class ErrorJ {
 
     Integer code;
