@@ -1,0 +1,139 @@
+{
+	"_type": "ERDDataModel",
+	"_id": "AAAAAAF2pLbVoy3sE0g=",
+	"_parent": {
+		"$ref": "AAAAAAFF+h6SjaM2Hec="
+	},
+	"name": "Data Model1",
+	"ownedElements": [
+		{
+			"_type": "ERDDiagram",
+			"_id": "AAAAAAF2pLbVoy3tgZA=",
+			"_parent": {
+				"$ref": "AAAAAAF2pLbVoy3sE0g="
+			},
+			"name": "core",
+			"documentation": "Ядро",
+			"ownedViews": [
+				{
+					"_type": "ERDEntityView",
+					"_id": "AAAAAAF2pLh3By31Sxw=",
+					"_parent": {
+						"$ref": "AAAAAAF2pLbVoy3tgZA="
+					},
+					"model": {
+						"$ref": "AAAAAAF2pLh3Bi3zOL0="
+					},
+					"subViews": [
+						{
+							"_type": "LabelView",
+							"_id": "AAAAAAF2pLh3By32sWg=",
+							"_parent": {
+								"$ref": "AAAAAAF2pLh3By31Sxw="
+							},
+							"font": "Arial;13;1",
+							"left": 120,
+							"top": 125,
+							"width": 237.111328125,
+							"height": 13,
+							"text": "measure"
+						},
+						{
+							"_type": "ERDColumnCompartmentView",
+							"_id": "AAAAAAF2pLh3By335P0=",
+							"_parent": {
+								"$ref": "AAAAAAF2pLh3By31Sxw="
+							},
+							"model": {
+								"$ref": "AAAAAAF2pLh3Bi3zOL0="
+							},
+							"subViews": [
+								{
+									"_type": "ERDColumnView",
+									"_id": "AAAAAAF2pLjCZi4D2yg=",
+									"_parent": {
+										"$ref": "AAAAAAF2pLh3By335P0="
+									},
+									"model": {
+										"$ref": "AAAAAAF2pLjCVS4AiIg="
+									},
+									"font": "Arial;13;0",
+									"left": 125,
+									"top": 148,
+									"width": 227.111328125,
+									"height": 13
+								},
+								{
+									"_type": "ERDColumnView",
+									"_id": "AAAAAAF2pLkZzy4KWaA=",
+									"_parent": {
+										"$ref": "AAAAAAF2pLh3By335P0="
+									},
+									"model": {
+										"$ref": "AAAAAAF2pLkZxC4HS4U="
+									},
+									"font": "Arial;13;0",
+									"left": 125,
+									"top": 163,
+									"width": 227.111328125,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 120,
+							"top": 143,
+							"width": 237.111328125,
+							"height": 38
+						}
+					],
+					"font": "Arial;13;0",
+					"left": 120,
+					"top": 120,
+					"width": 237.111328125,
+					"height": 61,
+					"nameLabel": {
+						"$ref": "AAAAAAF2pLh3By32sWg="
+					},
+					"columnCompartment": {
+						"$ref": "AAAAAAF2pLh3By335P0="
+					}
+				}
+			]
+		},
+		{
+			"_type": "ERDEntity",
+			"_id": "AAAAAAF2pLh3Bi3zOL0=",
+			"_parent": {
+				"$ref": "AAAAAAF2pLbVoy3sE0g="
+			},
+			"name": "measure",
+			"documentation": "Мера измерения",
+			"columns": [
+				{
+					"_type": "ERDColumn",
+					"_id": "AAAAAAF2pLjCVS4AiIg=",
+					"_parent": {
+						"$ref": "AAAAAAF2pLh3Bi3zOL0="
+					},
+					"name": "measure_id",
+					"documentation": "Мера измерения ИД",
+					"type": "INTEGER",
+					"length": 0,
+					"primaryKey": true
+				},
+				{
+					"_type": "ERDColumn",
+					"_id": "AAAAAAF2pLkZxC4HS4U=",
+					"_parent": {
+						"$ref": "AAAAAAF2pLh3Bi3zOL0="
+					},
+					"name": "measure_name",
+					"documentation": "Наименование",
+					"type": "VARCHAR",
+					"length": "100",
+					"unique": true
+				}
+			]
+		}
+	]
+}
